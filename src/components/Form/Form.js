@@ -13,7 +13,7 @@ export default function Form({name, title, formQuestion, pathLink, textLink, but
         <section className='authentification' id={name}>
             <div className='authentification__container'>
                 <Link to='/'>
-                    <img className="form-logo" src={formLogo} alt="логотип" />
+                    <img className="form-logo" src={formLogo} alt="логотип главной страницы" />
                 </Link>
                 <form className="form" name={`${name}Form`} onSubmit={ onSubmit }>
                     <h1 className="form__heading">{`${title}`}</h1>
@@ -26,7 +26,8 @@ export default function Form({name, title, formQuestion, pathLink, textLink, but
                             id="email" 
                             name="email" 
                             minLength="8" 
-                            required 
+                            required
+                            placeholder="Email"
                             onChange={onChange}
                             value={formValueEmail}
                         />
@@ -42,6 +43,7 @@ export default function Form({name, title, formQuestion, pathLink, textLink, but
                             minLength="8" 
                             maxLength="16" 
                             required
+                            placeholder="Пароль"
                             onChange={onChange}
                             value={formValuePassword}
                         />

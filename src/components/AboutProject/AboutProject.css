@@ -5,8 +5,8 @@
     max-width: 1280px;
     margin-left: 70px;
     margin-right: 70px;
-    padding-top: 110px;
-    padding-bottom: 110px;
+    padding-top: 111px;
+    padding-bottom: 93px;
     margin-bottom: 0;
 }
 
@@ -23,7 +23,8 @@
     line-height: normal;
     letter-spacing: -0.88px;
     text-align: left;
-    margin-bottom: 23px;
+    margin-top: 0;
+    margin-bottom: 22px;
 }
 
 .aboutproject__stages {
@@ -34,7 +35,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 40px;
-    row-gap: 26px;
+    row-gap: 10px;
 }
 
 .aboutproject__stages-heading {
@@ -95,8 +96,8 @@
     font-weight: 400;
     line-height: normal;
     background-color: #F2F2F2;
-    padding-top: 9px;
-    padding-bottom: 9px;
+    padding-top: 9.5px;
+    padding-bottom: 9.5px;
     margin: 0;
 }
 
@@ -109,11 +110,17 @@
     .aboutproject {
         margin-left: 50px;
         margin-right: 50px;
+        padding-top: 90px;
+        padding-bottom: 73px;
+    }
+
+    .aboutproject__heading {
+        margin-bottom: 23px;
     }
     
     .aboutproject__stages {
         column-gap: 30px;
-        row-gap: 22px;
+        row-gap: 16px;
     }
     
     .aboutproject__stages-text {
@@ -138,11 +145,11 @@
         margin-left: 18px;
         margin-right: 18px;
         padding-top: 70px;
-        padding-bottom: 70px;
+        padding-bottom: 47px;
     }
     
     .aboutproject__head {
-        margin-bottom: 60px;
+        margin-bottom: 62px;
     }
     
     .aboutproject__heading {
@@ -154,7 +161,7 @@
     .aboutproject__stages {
         display: flex;
         flex-direction: column;
-        row-gap: 16px;
+        row-gap: 17px;
     }
     
     .aboutproject__stages-heading {
@@ -176,7 +183,7 @@
         margin-top: 20px;
         grid-template-columns: 100px 1fr;
         grid-template-rows: 1fr 1fr;
-        row-gap: 21px;
+        row-gap: 10px;
     }
     
     .aboutproject__chart-text {
@@ -185,6 +192,7 @@
     }
     
     .aboutproject__chart-heading {
+        font-size: 11px;
         padding-top: 11px;
         padding-bottom: 11px;
     }

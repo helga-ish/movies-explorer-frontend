@@ -47,10 +47,14 @@
     justify-self: flex-start;
     padding: 0;
     padding-left: 10px;
-    outline: none;
     text-overflow: ellipsis;
     white-space: nowrap;
-    
+    outline: 0;
+    border-width: 0 0 1px;
+}
+
+.searchForm__field:focus {
+    border-bottom: 1px solid #2BE080;
 }
 
 .searchForm__button {
@@ -130,8 +134,10 @@
     .searchForm {
         margin-top: 80px;
         margin-bottom: 45px;
+        margin-left: 0;
+        margin-right: 0;
         align-items: normal;
-        grid-template-columns: 1fr;
+        grid-template-columns: 300px;
         grid-template-rows: 72px min-content;
         row-gap: 45px;
         box-shadow: none;

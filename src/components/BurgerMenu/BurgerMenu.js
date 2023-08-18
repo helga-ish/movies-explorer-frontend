@@ -26,10 +26,10 @@ export default function BurgerMenu() {
 
     return(
         <div className='burger-menu'>
-            <div className={ navigationToggleClassName } onClick={!isActive ? handleActiveState : handleInactiveState}></div>
+            <button className={ navigationToggleClassName } onClick={!isActive ? handleActiveState : handleInactiveState} />
             <div className={ burgerMenuContainerClassName }>
                 <ul className={ burgerMenuClassName }>
-                    <li><div className='burger-menu__cross' onClick={!isActive ? handleActiveState : handleInactiveState}></div></li>
+                    <li><button type='button' className='burger-menu__cross' onClick={!isActive ? handleActiveState : handleInactiveState} /></li>
                     <li><Link className={ headerMainLinkClassName } to="/" onClick={isActive ? handleInactiveState : '' }>Главная</Link></li>
                     <li><Link className={ headerMoviesLinkClassName } to="/movies" onClick={isActive ? handleInactiveState : '' }>Фильмы</Link></li>
                     <li><Link className={ headerSavedMoviesLinkClassName } to="/saved-movies" onClick={isActive ? handleInactiveState : '' }>Сохранённые фильмы</Link></li>

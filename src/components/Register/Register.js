@@ -23,7 +23,7 @@ export default function Register() {
         <Form
             name = 'register'
             title = 'Добро пожаловать!'
-            formQuestion = 'Уже зарегистрированы? '
+            formQuestion = 'Уже зарегистрированы?'
             pathLink = '/signin'
             textLink = 'Войти'
             buttonTitle = 'Зарегистрироваться'
@@ -41,6 +41,7 @@ export default function Register() {
                     minLength="2"
                     maxLength="30"
                     required 
+                    placeholder="Имя"
                     // onChange={handleChange}
                     // value={formValue.name}
                 />

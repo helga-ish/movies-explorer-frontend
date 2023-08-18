@@ -20,7 +20,7 @@
     text-decoration: none;
     color: black;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 16px;
     transition: opacity .4s;
     margin: 0;
@@ -60,6 +60,7 @@
 }
 
 .navigation__links {
+    margin-top: 22px;
     list-style: none;
     padding: 0;
     display: grid;

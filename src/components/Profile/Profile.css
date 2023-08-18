@@ -41,14 +41,24 @@
     line-height: normal;
     padding: 16px 0 16px 0;
     margin: 0;
+    outline: 0;
+    border-width: 0 0 1px;
 }
 
 .profile__form-field:first-of-type {
     border-bottom: 1px solid #E8E8E8;
 }
 
+.profile__form-field:focus {
+    border-bottom: 1px solid #3456F3;
+}
+
 .profile__form-field_active {
     pointer-events: all;
+}
+
+.profile__form-field::placeholder {
+    visibility: visible;
 }
 
 .profile__form-label {
@@ -71,6 +81,7 @@
 }
 
 .profile__form-button {
+    text-decoration: none;
     padding: 0;
     border: none;
     color: #000;
@@ -84,9 +95,12 @@
     transition: opacity .5s;
 }
 
-.profile__form-button_type_signout {
+.signout-button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
     color: #FF4062;
-    margin-top: 16px;
+    margin-top: 17px;
     font-weight: 500;
 }
 

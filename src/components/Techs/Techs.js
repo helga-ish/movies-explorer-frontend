@@ -4,10 +4,10 @@ function Techs() {
     return(
         <section className='techs' id='techs'>
             <div className='techs__head'>
-                <h1 className='techs__heading'>Технологии</h1>
+                <h2 className='techs__heading'>Технологии</h2>
             </div>
             <div className='techs__description'>
-                <h2 className='techs__description-heading'>7 технологий</h2>
+                <h3 className='techs__description-heading'>7 технологий</h3>
                 <p className='techs__description-text'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
                 <ul className='techs__description-buttons'>
                     <li className='techs__buttons-element'>HTML</li>

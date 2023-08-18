@@ -5,7 +5,7 @@
     max-width: 1280px;
     margin-left: 70px;
     margin-right: 70px;
-    padding-bottom: 125px;
+    padding-bottom: 115px;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -16,14 +16,15 @@
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
+    margin-top: 0;
     margin-bottom: 50px;
     padding: 0;
 }
 
 .portfolio__nav {
     display: grid;
-    grid-template-columns: 880px 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1140px;
+    grid-template-rows: repeat(3, auto);
     row-gap: 20px;
     list-style: none;
     padding: 0;
@@ -38,38 +39,50 @@
     font-weight: 400;
     line-height: 50px;
     letter-spacing: -1.2px;
+    padding-bottom: 10px;
 }
 
-.portfolio__nav-element:nth-child(5) {
+.portfolio__nav-link {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    color: #000;
+    transition: opacity .5s;
+    cursor: pointer;
+}
+
+.portfolio__nav-link:hover {
+    opacity: .7;
+}
+
+.portfolio__nav-element:nth-child(3) {
     border-bottom: none;
     padding-bottom: 0;
 }
 
-.portfolio__nav-arrow-div {
-    display: flex;
-    grid-column: 2 / 3;
-    border-bottom: 1px solid #E8E8E8;
-    justify-content: end;
-}
-
-.portfolio__nav-arrow-div:last-child {
-    border-bottom: none;
-}
-
 .portfolio__nav-arrow {
+    display: flex;
     width: 29px;
-    height: 60px;
+    height: 59px;
+    background-color: transparent;
+    border: none;
+    background-repeat: no-repeat;
+    background-image: url(../../images/portfolioArrow.svg);
+    padding: 0;
+    background-position: center;
+    
 }
+
 
 @media screen and (max-width: 1100px) {
     .portfolio {
         margin-left: 50px;
         margin-right: 50px;
-        padding-bottom: 90px;
+        padding-bottom: 85px;
     }
     
     .portfolio__nav {
-        grid-template-columns: 386px 1fr;
+        grid-template-columns: 668px;
     }
     
     .portfolio__nav-element {
@@ -79,6 +92,7 @@
     
     .portfolio__nav-arrow {
         width: 27px;
+        height: 57px;
     }
 }
 
@@ -86,7 +100,7 @@
     .portfolio {
         margin-left: 14px;
         margin-right: 14px;
-        padding-bottom: 70px;
+        padding-bottom: 71px;
     }
     
     .portfolio__heading {
@@ -95,7 +109,7 @@
     }
     
     .portfolio__nav {
-        grid-template-columns: 250px 1fr;
+        grid-template-columns: 292px;
     }
     
     .portfolio__nav-element {

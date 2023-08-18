@@ -14,7 +14,7 @@ export default function Navigation() {
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
     return(
-            <div className='navigation'>
+            <nav className='navigation'>
                 {isLoggedIn ? (
                     <ul className="navigation__main">
                         <li><Link className='navigation__link navigation__link_type_signup' to="/signup">Регистрация</Link></li>
@@ -41,7 +41,7 @@ export default function Navigation() {
                         <BurgerMenu />
                     </nav>
                 )}
-            </div>
+            </nav>
     )
 }
 

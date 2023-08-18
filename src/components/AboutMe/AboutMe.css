@@ -23,6 +23,7 @@
     line-height: normal;
     letter-spacing: -0.88px;
     text-align: left;
+    margin-top: 0;
     margin-bottom: 23px;
 }
 
@@ -73,6 +74,12 @@
     font-weight: 500;
     line-height: normal;
     padding: 0;
+    transition: opacity .5s;
+    cursor: pointer;
+}
+
+.aboutme__info-link:hover {
+    opacity: .7;
 }
 
 .aboutme__info-avatar {
@@ -175,7 +182,7 @@
     .aboutme__info-description {
         font-size: 11px;
         line-height: 16px;
-        padding-bottom: 40px;
+        padding-bottom: 57px; /* <--- у меня меньше текста, поэтому больше отступ, чтобы соответствовало макету */
     }
     
     .aboutme__info-link {

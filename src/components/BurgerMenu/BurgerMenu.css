@@ -45,7 +45,7 @@
         margin: 0;
         grid-template-columns: auto;
         grid-template-rows: min-content min-content min-content auto;
-        row-gap: 28px;
+        row-gap: 29px;
         justify-content: center;
         justify-items: center;
         padding-top: 131px;
@@ -61,6 +61,9 @@
 
     .burger-menu__toggler_active {
         display: flex;
+        background-color: transparent;
+        border: none;
+        padding: 0;
         background-image: url(../../images/burgerMenuNav.svg);
         width: 44px;
         height: 44px;
@@ -78,10 +81,13 @@
 
     .burger-menu__cross {
         display: flex;
+        padding: 0;
+        background-color: transparent;
+        border: none;
         position: absolute;
         background-image: url(../../images/burgerMenuCross.svg);
-        width: 22px;
-        height: 22px;
+        width: 31px;
+        height: 31px;
         background-size: cover;
         top: 22.4px;
         right: 22.4px;
@@ -119,7 +125,7 @@
         line-height: 16px;
         justify-items: center;
         align-items: center;
-        padding-top: 32vh;
+        padding-top: 36vh;
     }
 
     .burger-menu__link-profile-button {
@@ -142,7 +148,7 @@
 @media screen and (max-width: 520px) {
     .burger-menu__nav {
         width: 100%;
-        row-gap: 24px;
+        row-gap: 25px;
         padding-top: 120px;
     }
 

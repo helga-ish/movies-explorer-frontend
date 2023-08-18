@@ -21,7 +21,7 @@ export default function Login() {
         <Form
             name = 'login'
             title = 'Рады видеть!'
-            formQuestion = 'Ещё не зарегистрированы? '
+            formQuestion = 'Ещё не зарегистрированы?'
             pathLink = '/signup'
             textLink = 'Регистрация'
             buttonTitle = 'Войти'

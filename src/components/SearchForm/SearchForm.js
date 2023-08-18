@@ -9,8 +9,19 @@ export default function SearchForm() {
              <form className="searchForm" action="/search" method="get">
                 <fieldset className='searchForm__container'>
                     <img className="searchForm__icon" alt='searchIcon' src={ searchFormIcon }/>
-                    <input className="searchForm__field" type="text" name="query" id="query" placeholder="Фильм" />
-                    <input className="searchForm__button" type="submit" value="Найти" />
+                    <input
+                    className="searchForm__field" 
+                    type="text" 
+                    name="query" 
+                    id="query" 
+                    placeholder="Фильм"
+                    required 
+                    />
+                    <input 
+                    className="searchForm__button" 
+                    type="submit" 
+                    value="Найти" 
+                    />
                 </fieldset>
                 <div className="searchForm__filter">
                     <img className="searchForm__toggle" alt='toggle' src={ searchFormToggle }/>

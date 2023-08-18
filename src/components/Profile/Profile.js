@@ -1,6 +1,7 @@
 import '../Form/Form.css';
 import './Profile.css';
 import React from "react";
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
 
@@ -47,7 +48,7 @@ export default function Profile() {
                     (
                     <div className='profile__form-button-list'>
                         <button type="submit" className='profile__form-button' onClick={ goToEditMode }>Редактировать</button>
-                        <button type="submit" className='profile__form-button profile__form-button_type_signout'>Выйти из аккаунта</button>
+                        <Link className="profile__form-button" to="/"><button type="submit" className='signout-button'>Выйти из аккаунта</button></Link>
                     </div>
                     ) : (
                         <button type="submit" className='profile__form-button profile__form-button_type_save-changes' onClick={ finishEditMode }>Сохранить</button>

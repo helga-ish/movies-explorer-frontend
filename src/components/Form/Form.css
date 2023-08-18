@@ -8,14 +8,14 @@
 
 .form-logo {
     width: 38px;
-    margin-bottom: 40px;
+    margin-bottom: 34px;
     height: 38px;
     object-fit: cover;
 }
 
 .authentification__container {
     display: flex;
-    justify-content: center;
+    margin: auto;
     width: 396px;
     flex-direction: column;
 }
@@ -63,12 +63,20 @@
     margin-bottom: 8px;
 }
 
+.form__field:focus {
+    outline-color: #3456F3;
+}
+
 .form__field:last-of-type {
     margin-bottom: 10px;
 }
 
 .form__field_type_error {
     color: #FF4062;
+}
+
+.form__field::placeholder {
+    visibility: hidden;
 }
 
 .form__label {
@@ -145,6 +153,7 @@
     text-decoration: none;
     color: #000;
     transition: opacity .4s;
+    padding-left: 6px;
 }
 
 .transfer-link:hover {
@@ -152,7 +161,7 @@
 }
 
 .password-input-error {
-    margin-bottom: 91px;
+    margin-bottom: 69px;
 }
 
 
@@ -167,7 +176,7 @@
     }
 
     .form-logo {
-        margin-bottom: 50px;
+        margin-bottom: 49px;
     }
 
     .form__heading {
@@ -185,7 +194,7 @@
     }
 
     .button-login {
-        margin-top: 100px;
+        margin-top: 85px;
     }
 
     .form__transfer {

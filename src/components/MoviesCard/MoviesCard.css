@@ -63,7 +63,7 @@
 
 .moviesCard__container {
     margin: auto;
-    margin-top: 14px;
+    margin-top: 12px;
     margin-bottom: 0;
     display: grid;
     grid-template-columns: 250px 44px;
@@ -106,7 +106,7 @@
     }
 
     .moviesCard__container {
-        margin-top: 25px;
+        margin-top: 24px;
     }
 
     .moviesCard__name {
@@ -131,12 +131,16 @@
     }
 
     .moviesCard__container {
-        margin-top: 16px;
+        margin-top: 13px;
         grid-template-columns: 240px 52px;
         column-gap: 8px;
     }
     
     .moviesCard__name {
         font-size: 12px;
+    }
+
+    .moviesCard__length {
+        padding: 3px 4px;
     }
 }

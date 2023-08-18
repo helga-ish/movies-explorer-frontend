@@ -31,7 +31,7 @@
     line-height: normal;
     text-align: center;
     padding-top: 79px;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #E8E8E8;;
     margin: 0;
 }
@@ -46,6 +46,7 @@
     padding: 0;
     margin-top: 20px;
     margin-bottom: 0;
+    list-style: none;
 }
 
 .footer__year {
@@ -56,10 +57,17 @@
 
 .footer__link {
     text-decoration: none;
+    color: black;
     list-style: none;
     margin: 0px;
     padding: 0;
     text-align: right;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+.footer__link:hover {
+    opacity: .7;
 }
 
 @media screen and (max-width: 1160px) {
@@ -81,8 +89,10 @@
     }
 
     .footer__text {
+        font-size: 12px;
         grid-column: 1;
         grid-row: 1;
+        padding-bottom: 21px;
     }
 
     .footer__nav {
@@ -93,6 +103,7 @@
         grid-gap: 12px;
         padding: 0;
         margin: 0;
+        justify-items: center;
     }
 
     .footer__link {

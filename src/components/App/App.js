@@ -35,7 +35,7 @@ function App() {
         <Route path='/saved-movies' element={
           <SavedMovies />
         } />
-        <Route path='/error404' element={
+        <Route path='*' element={
           <Error404 />
         } />
       </Routes>

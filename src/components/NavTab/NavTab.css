@@ -22,3 +22,12 @@
     font-weight: 500;
     line-height: 16px;
 }
+
+@media screen and (max-width: 500px) {
+    .navtab__list {
+        gap: 24px;
+    }
+    .navtab__link {
+        font-size: 11px;
+    }
+}

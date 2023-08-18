@@ -9,12 +9,12 @@ function Header() {
     const location = useLocation();
 
 
-    const headerClass = `header ${location.pathname === '/' ? 'header_pink' : ''} ${location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/error404' ? 'header_disabled' : ''}`
+    const headerClass = `header ${location.pathname === '/' ? 'header_pink' : ''} ${location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '*' ? 'header_disabled' : ''}`
     
         return(
             <header className = { headerClass }>
                 <Link to='/'>
-                    <img className="header__logo" src={logo} alt="логотип" />
+                    <img className="header__logo" src={logo} alt="логотип главной страницы" />
                 </Link>
                 <Navigation />
             </header>
