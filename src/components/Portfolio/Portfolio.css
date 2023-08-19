@@ -70,9 +70,13 @@
     background-image: url(../../images/portfolioArrow.svg);
     padding: 0;
     background-position: center;
-    
+    cursor: pointer;
+    transition: opacity .5s;
 }
 
+.portfolio__nav-arrow:hover {
+    opacity: .8;
+}
 
 @media screen and (max-width: 1100px) {
     .portfolio {
