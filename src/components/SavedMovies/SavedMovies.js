@@ -5,9 +5,11 @@ import './SavedMovies.css';
 
 export default function SavedMovies() {
     return(
-        <section className="saved-movies">
-            <SearchForm />
-            <MoviesCardList />
-        </section>
+        <main>
+            <section className="saved-movies">
+                <SearchForm />
+                <MoviesCardList />
+            </section>
+        </main>
     )
 };

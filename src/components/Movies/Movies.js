@@ -5,9 +5,11 @@ import './Movies.css';
 
 export default function Movies() {
     return(
-        <section className="movies">
-            <SearchForm />
-            <MoviesCardList />
-        </section>
+        <main>
+            <section className="movies">
+                <SearchForm />
+                <MoviesCardList />
+            </section>
+        </main>
     )
 };

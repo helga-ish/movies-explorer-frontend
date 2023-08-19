@@ -13,14 +13,13 @@ export default function Profile() {
         setIsInEditMode(false);
     }
 
-    // const userName 
-
     return(
+        <main>
             <section className='profile' id='profile'>
                 <form className="form profile__form" name='profileForm'>
-                    <h1 className="form__heading profile__form-heading">{`Привет, userName!`}</h1>
+                    <h1 className="form__heading profile__form-heading">{`Привет, Виталий!`}</h1>
                     <fieldset className="form__fields profile__form-fields">
-                        <h2 className="form__label profile__form-label" for='text'>Имя</h2>
+                        <label className="form__label profile__form-label" for='name'>Имя</label>
                         <input
                             type='text'
                             placeholder='Виталий'
@@ -32,7 +31,7 @@ export default function Profile() {
                             required
                         />
 
-                        <h2 className="form__label profile__form-label" for='email'>E-mail</h2>
+                        <label className="form__label profile__form-label" for='email'>E-mail</label>
                         <input
                             type='email'
                             placeholder='pochta@yandex.ru'
@@ -51,10 +50,14 @@ export default function Profile() {
                         <Link className="profile__form-button" to="/"><button type="submit" className='signout-button'>Выйти из аккаунта</button></Link>
                     </div>
                     ) : (
-                        <button type="submit" className='profile__form-button profile__form-button_type_save-changes' onClick={ finishEditMode }>Сохранить</button>
-                    )
+                        <div className='profile__form-button-list_edit'>
+                            <span className='profile__form-button-error'>При обновлении профиля произошла ошибка.</span>
+                            <button type="submit" className='profile__form-button profile__form-button_type_save-changes' onClick={ finishEditMode }>Сохранить</button>
+                        </div>
+                        )
                     }
                 </form>
-        </section>
+            </section>
+        </main>
     )
 };

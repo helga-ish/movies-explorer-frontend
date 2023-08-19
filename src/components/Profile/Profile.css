@@ -25,7 +25,7 @@
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
     margin-top: 0;
-    margin-bottom: 194px;
+    margin-bottom: 0px;
 }
 
 .profile__form-field {
@@ -78,6 +78,7 @@
 .profile__form-button-list {
     display: flex;
     flex-direction: column;
+    margin-top: 194px;
 }
 
 .profile__form-button {
@@ -96,6 +97,7 @@
 }
 
 .signout-button {
+    text-decoration: none;
     border: none;
     background-color: transparent;
     padding: 0;
@@ -106,6 +108,28 @@
 
 .profile__form-button:hover {
     opacity: .7;
+}
+
+.profile__form-button-list_edit {
+    display: flex;
+    flex-direction: column;
+    margin-top: 160px;
+}
+
+.profile__form-button-error {
+    visibility: hidden;
+    color: #FF004C;
+    text-align: center;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-bottom: 20px;
+    align-self: center;
+}
+
+.profile__form-button-error_active {
+    visibility: visible;
 }
 
 .profile__form-button_type_save-changes {
@@ -119,14 +143,23 @@
     cursor: pointer;
 }
 
+.profile__form-button_type_save-changes-disabled {
+    background-color: #F8F8F8;
+    color: #C2C2C2;
+}
+
 @media screen and (max-width: 768px) {
     .profile__form-heading {
         margin-top: 236px;
         margin-bottom: 80px;
     }
 
-    .profile__form-fields {
-        margin-bottom: 184px;
+    .profile__form-button-list {
+        margin-top: 184px;
+    }
+
+    .profile__form-button-list_edit {
+        margin-top: 150px;
     }
 }
 
@@ -145,8 +178,12 @@
         width: 260px;
     }
 
-    .profile__form-fields {
-        margin-bottom: 353px;
+    .profile__form-button-list {
+        margin-top: 353px;
+    }
+
+    .profile__form-button-list_edit {
+        margin-top: 319px;
     }
 
     .profile__form-button_type_save-changes {

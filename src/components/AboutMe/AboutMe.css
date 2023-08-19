@@ -98,6 +98,10 @@
         padding-top: 90px;
         padding-bottom: 90px;
     }
+
+    .aboutme__heading {
+        margin-bottom: 24px;
+    }
     
     .aboutme__info {
         column-gap: 200px;
@@ -107,19 +111,20 @@
         font-size: 40px;
         line-height: 40px;
         letter-spacing: -1.6x;
-        padding-bottom: 16px;
+        padding-bottom: 0px;
     }
     
     .aboutme__info-job {
         font-size: 12px;
         line-height: 18px;
-        padding-bottom: 20px;
+        padding-bottom: 0px;
     }
     
     .aboutme__info-description {
         font-size: 12px;
-        line-height: 22px;
-        padding-bottom: 87px;
+        line-height: 18px;
+        padding-top: 10px;
+        padding-bottom: 104px;
     }
     
     .aboutme__info-avatar {
@@ -136,7 +141,8 @@
 
 @media screen and (max-width: 800px) {
     .aboutme__info {
-        column-gap: 49px;
+        grid-template-rows: 56px 28px auto auto auto;
+        column-gap: 60px;
     }
 }
 
@@ -155,7 +161,7 @@
     .aboutme__heading {
         font-size: 18px;
         letter-spacing: -0.72px;
-        margin-bottom: 28px;
+        margin-bottom: 29px;
     }
     
     .aboutme__info {
@@ -182,6 +188,7 @@
     .aboutme__info-description {
         font-size: 11px;
         line-height: 16px;
+        padding-top: 19px;
         padding-bottom: 57px; /* <--- у меня меньше текста, поэтому больше отступ, чтобы соответствовало макету */
     }
     

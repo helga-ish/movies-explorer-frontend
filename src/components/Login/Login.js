@@ -18,17 +18,19 @@ export default function Login() {
     //   }
 
     return(
-        <Form
-            name = 'login'
-            title = 'Рады видеть!'
-            formQuestion = 'Ещё не зарегистрированы?'
-            pathLink = '/signup'
-            textLink = 'Регистрация'
-            buttonTitle = 'Войти'
-            // onSubmit={handleSubmit}
-            // onChange={handleChange}
-            // formValueEmail={formValue.email}
-            // formValuePassword={formValue.password} 
-        />
+        <main>
+            <Form
+                name = 'login'
+                title = 'Рады видеть!'
+                formQuestion = 'Ещё не зарегистрированы?'
+                pathLink = '/signup'
+                textLink = 'Регистрация'
+                buttonTitle = 'Войти'
+                // onSubmit={handleSubmit}
+                // onChange={handleChange}
+                // formValueEmail={formValue.email}
+                // formValuePassword={formValue.password} 
+            />
+        </main>
     )
 };

@@ -9,7 +9,7 @@ function Header() {
     const location = useLocation();
 
 
-    const headerClass = `header ${location.pathname === '/' ? 'header_pink' : ''} ${location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '*' ? 'header_disabled' : ''}`
+    const headerClass = `header ${location.pathname === '/' ? 'header_pink' : ''} ${location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/404' ? 'header_disabled' : ''}`
     
         return(
             <header className = { headerClass }>

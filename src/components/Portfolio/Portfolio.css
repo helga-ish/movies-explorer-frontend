@@ -23,7 +23,7 @@
 
 .portfolio__nav {
     display: grid;
-    grid-template-columns: 1140px;
+    grid-template-columns: minmax(292px, 1140px);
     grid-template-rows: repeat(3, auto);
     row-gap: 20px;
     list-style: none;
@@ -78,16 +78,13 @@
     .portfolio {
         margin-left: 50px;
         margin-right: 50px;
-        padding-bottom: 85px;
-    }
-    
-    .portfolio__nav {
-        grid-template-columns: 668px;
+        padding-bottom: 83px;
     }
     
     .portfolio__nav-element {
         font-size: 28px;
         letter-spacing: -1.12px;
+        padding-bottom: 12px;
     }
     
     .portfolio__nav-arrow {
@@ -108,10 +105,6 @@
         margin-bottom: 40px;
     }
     
-    .portfolio__nav {
-        grid-template-columns: 292px;
-    }
-    
     .portfolio__nav-element {
         font-size: 18px;
         line-height: 28px;
@@ -122,5 +115,6 @@
     .portfolio__nav-arrow {
         width: 18px;
         height: 28px;
+        background-size: 13px 11px;
     }
 }

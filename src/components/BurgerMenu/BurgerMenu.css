@@ -114,7 +114,7 @@
     .burger-menu__link_active {
         text-decoration-line: underline;
         text-decoration-thickness: 2px;
-        text-underline-offset: 4px;
+        text-underline-offset: 8px;
     }
 
     .burger-menu__link-profile {
@@ -152,9 +152,15 @@
         padding-top: 120px;
     }
 
+    .burger-menu__link-profile {
+        padding-top: 32vh;
+    }
+
     .burger-menu__toggler_active {
-        width: 40px;
-        height: 43px;
+        width: 33px;
+        height: 35px;
+        margin-right: 7px;
+        margin-top: 15px;
     }
 
     .burger-menu__cross {
@@ -163,6 +169,6 @@
     }
 
     .burger-menu__link_active {
-        text-underline-offset: 7px;
+        text-underline-offset: 10px;
     }
 }

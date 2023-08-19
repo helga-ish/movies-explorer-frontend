@@ -26,7 +26,7 @@ export default function BurgerMenu() {
 
     return(
         <div className='burger-menu'>
-            <button className={ navigationToggleClassName } onClick={!isActive ? handleActiveState : handleInactiveState} />
+            <button type='button' className={ navigationToggleClassName } onClick={!isActive ? handleActiveState : handleInactiveState} />
             <div className={ burgerMenuContainerClassName }>
                 <ul className={ burgerMenuClassName }>
                     <li><button type='button' className='burger-menu__cross' onClick={!isActive ? handleActiveState : handleInactiveState} /></li>
@@ -36,7 +36,7 @@ export default function BurgerMenu() {
                     <li>
                         <Link className='burger-menu__link burger-menu__link-profile' to="/profile" onClick={isActive ? handleInactiveState : '' }>
                             Аккаунт
-                            <button className='burger-menu__link-profile-button' onClick={isActive ? handleInactiveState : '' }>
+                            <button type='button' className='burger-menu__link-profile-button' onClick={isActive ? handleInactiveState : '' }>
                                 <img className="burger-menu__link-profile-logo" src={profileLogo} alt="логотип профиля" />
                             </button>
                         </Link>

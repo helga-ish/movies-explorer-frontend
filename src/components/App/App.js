@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, Navigate} from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main.js';
 import Login from '../Login/Login.js';
@@ -35,9 +35,11 @@ function App() {
         <Route path='/saved-movies' element={
           <SavedMovies />
         } />
-        <Route path='*' element={
+        <Route path="/404" element={
           <Error404 />
         } />
+        <Route path='*' element={
+          <Navigate to="/404" replace />} />
       </Routes>
       {/* <Preloader /> */}
       <Footer />

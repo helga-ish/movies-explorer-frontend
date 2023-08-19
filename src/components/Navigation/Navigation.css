@@ -60,12 +60,12 @@
 }
 
 .navigation__links {
-    margin-top: 22px;
+    margin-top: 21px;
     list-style: none;
     padding: 0;
     display: grid;
     grid-template-columns: auto auto auto;
-    column-gap: 20px;
+    column-gap: 21.5px;
     align-items: center;
     justify-content: end;
 }

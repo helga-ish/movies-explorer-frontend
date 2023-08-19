@@ -44,7 +44,7 @@
     
     .moviesCardList__gallery {
         grid-template-columns: repeat(2, 339px);
-        row-gap: 47px;
+        row-gap: 45px;
         margin-top: 0;
         margin-bottom: 0;
         margin-left: 30px;
@@ -53,6 +53,7 @@
     
     .moviesCardList__showmore {
         margin-top: 60px;
+        padding-top: 11px;
     }
 }
 
@@ -65,7 +66,7 @@
         grid-template-columns: 300px;
         grid-template-rows: repeat(5, 1fr);
         column-gap: 0;
-        row-gap: 39px;
+        row-gap: 36px;
         margin-left: 10px;
         margin-right: 10px;
         margin-top: 0;
@@ -74,6 +75,8 @@
 
     .moviesCardList__showmore {
         width: 240px;
+        padding: 9px 20px;
+        padding-top: 11px;
     }
 
 }

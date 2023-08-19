@@ -98,7 +98,7 @@
     }
 
     .techs__description-heading { 
-        padding-bottom: 20px;
+        padding-bottom: 22px;
     }
 
     .techs__description-buttons {
@@ -107,6 +107,13 @@
         margin-top: 83px;
         margin-left: 60px;
         margin-right: 60px;
+    }
+
+    .techs__description-text {
+        max-width: 460px;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.48px;
     }
 
     .techs__buttons-element {
@@ -143,6 +150,7 @@
     }
     
     .techs__description-text {
+        max-width: 292px;
         font-size: 11px;
         line-height: 16px;
         letter-spacing: -0.44px;

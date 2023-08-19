@@ -11,6 +11,11 @@
     margin-bottom: 34px;
     height: 38px;
     object-fit: cover;
+    transition: opacity .5s;
+}
+
+.form-logo:hover {
+    opacity: .7;
 }
 
 .authentification__container {
@@ -176,7 +181,7 @@
     }
 
     .form-logo {
-        margin-bottom: 49px;
+        margin-bottom: 48px;
     }
 
     .form__heading {
@@ -194,7 +199,7 @@
     }
 
     .button-login {
-        margin-top: 85px;
+        margin-top: 87px;
     }
 
     .form__transfer {

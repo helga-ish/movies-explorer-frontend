@@ -20,7 +20,7 @@ export default function Navigation() {
                         <li><Link className='navigation__link navigation__link_type_signup' to="/signup">Регистрация</Link></li>
                         <li>
                             <Link className='navigation__link' to="/signin">
-                                <button className='navigation__link navigation__link_type_signin'>Войти</button>
+                                <button type='submit' className='navigation__link navigation__link_type_signin'>Войти</button>
                             </Link>
                         </li>
                     </ul>
@@ -32,7 +32,7 @@ export default function Navigation() {
                             <li>
                                 <Link className='navigation__link navigation__link-profile' to="/profile">
                                     Аккаунт
-                                    <button className='navigation__link-profile-button'>
+                                    <button type='button' className='navigation__link-profile-button'>
                                         <img className="navigation__link-profile-logo" src={profileLogo} alt="логотип профиля" />
                                     </button>
                                 </Link>

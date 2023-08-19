@@ -19,6 +19,11 @@
     margin-top: 18px;
     object-fit: cover;
     margin-left: 70px;
+    transition: opacity .5s;
+}
+
+.header__logo:hover {
+    opacity: .7;
 }
 
 

@@ -19,7 +19,7 @@ export default function Form({name, title, formQuestion, pathLink, textLink, but
                     <h1 className="form__heading">{`${title}`}</h1>
                     <fieldset className="form__fields">
                         {children}
-                        <h2 className="form__label" for='email'>E-mail</h2>
+                        <label className="form__label" for='email'>E-mail</label>
                         <input
                             type='email'
                             className="form__field form__field_type_email" 
@@ -34,7 +34,7 @@ export default function Form({name, title, formQuestion, pathLink, textLink, but
 
                         <span className='form__field-error email-input-error'>Что-то пошло не так...</span>
 
-                        <h2 className="form__label" for='password'>Пароль</h2>
+                        <label className="form__label" for='password'>Пароль</label>
                         <input
                             type='password'
                             className="form__field form__field_type_password" 
