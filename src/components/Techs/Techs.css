@@ -1,0 +1,173 @@
+.techs {
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    max-width: 1280px;
+    margin: 0;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.techs__head {
+    margin-bottom: 90px;
+    border-bottom: solid 1px #000;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.techs__heading {
+    color: #000;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.88px;
+    text-align: left;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 23px;
+}
+
+.techs__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.techs__description-heading { 
+    color: #000;
+    text-align: center;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 58px;
+    letter-spacing: -2px;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 26px;
+}
+
+.techs__description-text {
+    max-width: 460px;
+    color: #000;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.56px;
+    margin: 0;
+}
+
+.techs__description-buttons {
+    list-style: none;
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(7, 90px);
+    grid-template-rows: 60px;
+    margin: auto;
+    margin-top: 100px;
+    column-gap: 10px;
+    padding: 0;
+}
+.techs__buttons-element {
+    padding-top: 21px;
+    padding-bottom: 22px;
+    border-radius: 10px;
+    background-color: #E8E8E8;
+    color: #000;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.56px;
+}
+
+@media screen and (max-width: 900px) {
+    .techs {
+        padding-top: 90px;
+        padding-bottom: 90px;
+    }
+
+    .techs__head {
+        margin-bottom: 80px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    .techs__description-heading { 
+        padding-bottom: 22px;
+    }
+
+    .techs__description-buttons {
+        grid-template-columns: repeat(7, 84px);
+        grid-template-rows: 57px;
+        margin-top: 83px;
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+
+    .techs__description-text {
+        max-width: 460px;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: -0.48px;
+    }
+
+    .techs__buttons-element {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .techs {
+        background-color: #fff;
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .techs__head {
+        margin-bottom: 60px;
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    .techs__heading { 
+        padding-bottom: 28px;
+        margin-bottom: 0;
+        font-size: 18px;
+        letter-spacing: -0.72px;
+    }
+
+    .techs__description-heading {
+        font-size: 30px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: -1.2px;
+        padding-bottom: 24px;
+    }
+    
+    .techs__description-text {
+        max-width: 292px;
+        font-size: 11px;
+        line-height: 16px;
+        letter-spacing: -0.44px;
+    }
+    
+    .techs__description-buttons {
+        grid-template-columns: repeat(2, 84px);
+        grid-template-rows: repeat(4, 57px);
+        margin: auto;
+        margin-top: 50px;
+        column-gap: 10px;
+        row-gap: 10px;
+        padding: 0;
+    }
+    .techs__buttons-element {
+        font-size: 12px;
+        letter-spacing: -0.48px;
+    }
+
+}
