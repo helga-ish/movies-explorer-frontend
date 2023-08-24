@@ -4,7 +4,7 @@ import React from 'react';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
-function Header() {
+function Header({ loggedIn }) {
 
     const location = useLocation();
 
@@ -16,7 +16,7 @@ function Header() {
                 <Link to='/'>
                     <img className="header__logo" src={logo} alt="логотип главной страницы" />
                 </Link>
-                <Navigation />
+                <Navigation isLoggedIn = { loggedIn } />
             </header>
         )
     }

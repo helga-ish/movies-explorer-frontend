@@ -19,6 +19,7 @@
 }
 
 .moviesCard__button {
+    visibility: hidden;
     position: absolute;
     top: 14px;
     right: 14px;
@@ -27,6 +28,10 @@
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
+}
+
+.moviesCard__button_type_visible {
+    visibility: visible;
 }
 
 .moviesCard__button_type_notsaved {

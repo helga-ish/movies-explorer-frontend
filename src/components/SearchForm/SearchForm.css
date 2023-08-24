@@ -53,6 +53,7 @@
     border-width: 0 0 1px;
 }
 
+
 .searchForm__field:focus {
     border-bottom: 1px solid #2BE080;
 }
@@ -76,6 +77,11 @@
 
 .searchForm__button:hover {
     opacity: .7;
+}
+
+.searchForm__button:disabled {
+    background-color: #A0A0A0;
+    cursor: default;
 }
 
 .searchForm__filter {

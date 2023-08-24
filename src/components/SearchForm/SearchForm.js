@@ -1,9 +1,37 @@
+import React from "react";
 import './SearchForm.css';
 import searchFormIcon from '../../images/searchFormIcon.svg';
 import searchFormToggle from '../../images/searchFormToggle.svg';
 // import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
+import useForm from "../../hooks/useForm";
 
-export default function SearchForm() {
+export default function SearchForm({ findMovies }) {
+
+    const stateSchema = {
+        query: { value: '', error: ''},
+    };
+
+    const validationStateSchema = {
+        query: {
+          required: true,
+          validator: {
+            regEx: /^[a-zA-Zа-яА-я- ]{2,30}$/,
+            error: 'Нужно ввести ключевое слово.',
+          },
+        },
+      };
+
+      const { state, handleOnChange, handleOnSubmit, disable } = useForm(
+        stateSchema,
+        validationStateSchema,
+        handleSubmit
+      );
+
+    function handleSubmit() {
+        findMovies(state.query.value);
+    }
+
+
     return(
         <section className="search">
              <form className="searchForm" action="/search" method="get">
@@ -16,11 +44,15 @@ export default function SearchForm() {
                     id="query" 
                     placeholder="Фильм"
                     required 
+                    onChange={ handleOnChange }
+                    value = { state.query.value }
                     />
                     <input 
                     className="searchForm__button" 
                     type="submit" 
-                    value="Найти" 
+                    value="Найти"
+                    disabled = { disable } 
+                    onClick = { handleOnSubmit }
                     />
                 </fieldset>
                 <div className="searchForm__filter">

@@ -143,7 +143,7 @@
     cursor: pointer;
 }
 
-.profile__form-button_type_save-changes-disabled {
+.profile__form-button_type_save-changes:disabled {
     background-color: #F8F8F8;
     color: #C2C2C2;
 }
