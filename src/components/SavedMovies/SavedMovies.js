@@ -38,41 +38,20 @@ export default function SavedMovies({ loggedIn }) {
                 )
             })
             .catch((error) => {
+                setIsError(true);
                 console.error(`Ошибка загрузки данных с сервера: ${error}`);
             })
             .finally(() => {
                 setIsLoading(false);
             });
         }, [loggedIn])
-        
+
         const findMovies = (filterParam) => {
             setIsLoading(true);
-            api.getAllMovies()
-            .then((data) => {
-                setIsError(false);
-                setMovies(
-                    data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase())).map((item) => ({
-                        country: item.country,
-                        director: item.director,
-                        duration: item.duration,
-                        year: item.year,
-                        description: item.description,
-                        image: item.image,
-                        trailerLink: item.trailerLink,
-                        nameRU: item.nameRU,
-                        nameEN: item.nameEN,
-                        thumbnail: item.image,
-                        movieId: item.id,
-                    }))
-                )
-            })
-            .catch((error) => {
-                setIsError(true);
-                console.log(`Ошибка загрузки данных с сервера: ${error}`);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            })
+            setMovies(
+                movies.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase())).map((item) => ({ item }))
+            );
+            setIsLoading(false);
         }
 
     return(
