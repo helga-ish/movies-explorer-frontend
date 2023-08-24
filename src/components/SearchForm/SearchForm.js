@@ -2,10 +2,10 @@ import React from "react";
 import './SearchForm.css';
 import searchFormIcon from '../../images/searchFormIcon.svg';
 import searchFormToggle from '../../images/searchFormToggle.svg';
-// import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
+import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
 import useForm from "../../hooks/useForm";
 
-export default function SearchForm({ findMovies }) {
+export default function SearchForm({ findMovies, setIsShortOff }) {
 
     const stateSchema = {
         query: { value: '', error: ''},
@@ -29,6 +29,18 @@ export default function SearchForm({ findMovies }) {
 
     function handleSubmit() {
         findMovies(state.query.value);
+    }
+
+    // short films filter
+    const [isToggleOff, setIsToggleOff] = React.useState(false);
+    function handleToggleOff() {
+        setIsToggleOff(true);
+        setIsShortOff(true);
+    }
+
+    function handleToggleOn() {
+        setIsToggleOff(false);
+        setIsShortOff(false);
     }
 
 
@@ -56,8 +68,8 @@ export default function SearchForm({ findMovies }) {
                     />
                 </fieldset>
                 <div className="searchForm__filter">
-                    <img className="searchForm__toggle" alt='toggle' src={ searchFormToggle }/>
-                    {/* <img className="searchForm__toggle" alt='toggle' src={ searchFormToggleOff }/> <-- вкл или выкл корометражек завязываются на стейт страницы */}
+                    {!isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggle } onClick = { handleToggleOff }/>}
+                    {isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggleOff } onClick = { handleToggleOn }/>}
                     <h2 className="searchForm__toggle-name">Короткометражки</h2>
                 </div>
             </form>
