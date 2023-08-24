@@ -2,12 +2,22 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css';
 
-export default function MoviesCardList({ movies }) {
+export default function MoviesCardList({ movies, isShortOff }) {
+
+
 
     return(
         <section className="moviesCardList">
-            {movies.length === 0 ? (
-                <h2>Ничего не найдено.</h2> // не должно быть на странице при обновлении страницы
+            {isShortOff ? (
+                <ul className="moviesCardList__gallery">
+                    {movies.filter((item) => item.duration < 60).map((item) => (
+                        <MoviesCard
+                        key = { item.movieId }
+                        movie = { item }
+                         />
+                    ))
+                }
+                </ul>
             ) : (
             <ul className="moviesCardList__gallery">
                 {movies.map((item) => (
@@ -30,8 +40,8 @@ export default function MoviesCardList({ movies }) {
 // Ширина 768px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
 // Ширина от 320px до 480px — 5 карточек по 1 в ряд. Кнопка «Ещё» загружает по 2 карточки.
 
-// хранение результатов пред поиска в localStorage (удалять при signout), не надо для сохраненных, устанавливать текст в стркое поиска и отображат ранее найденные фильмы
+// хранение результатов пред поиска в localStorage (удалять при signout), не надо для сохраненных, устанавливать текст в строке поиска и отображат ранее найденные фильмы
 
-// переключатель короткометражек: убирать при выкл из поиска фильмы меньше скольки-то минут и возвращать при вкл
+// переключатель короткометражек: нужно ли писать "не найдено" при отсутствии короткометражек?
 
 // настроить поиск по англ названиям тоже
