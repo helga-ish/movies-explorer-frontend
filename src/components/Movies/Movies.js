@@ -15,13 +15,20 @@ export default function Movies() {
     // getting movies
     const [movies, setMovies] = React.useState([]);
 
+    // empty array
+    const [isEmpty, setIsEmpty] = React.useState(false);
+
+    // short movies filter
+    const [isShortOff, setIsShortOff] = React.useState(false);
+
     const findMovies = (filterParam) => {
         setIsLoading(true);
         api.getAllMovies()
         .then((data) => {
             setIsError(false);
+            const filteredData = data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
             setMovies(
-                data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase())).map((item) => ({
+                filteredData.map((item) => ({
                     country: item.country,
                     director: item.director,
                     duration: item.duration,
@@ -35,6 +42,9 @@ export default function Movies() {
                     movieId: item.id,
                 }))
             )
+            if(filteredData.length === 0) {
+                setIsEmpty(true);
+            }
         })
         .catch((error) => {
             setIsError(true);
@@ -51,18 +61,24 @@ export default function Movies() {
             <section className="movies">
                 <SearchForm
                     findMovies = { findMovies }
+                    setIsShortOff = { setIsShortOff }
                 />
                 {isLoading ? (
                     <Preloader />
                     ) : (
                     isError ? (
                         <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</h2>
-                    ) : (
-                        <MoviesCardList
-                            movies = { movies }
-                        />
+                        ) : (
+                            isEmpty ? (
+                                <h2>Ничего не найдено.</h2>
+                                ) : (
+                                <MoviesCardList
+                                    movies = { movies }
+                                    isShortOff = { isShortOff }
+                                />
+                                )
+                            )
                         )
-                    )
                 }
             </section>
         </main>
