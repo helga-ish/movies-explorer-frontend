@@ -13,7 +13,7 @@ export default function MoviesCard({ movie }) {
         setIsSaved(true);
         // смена иконки сохранение на галочку (галочка не появляется в зависимости от ховера, а всегда на месте)
         // запрос к нашей апи на добавление/сохранение фильма - createMovie, при возвращении в объекте уже будет owner, возвращает объект data: movie
-         
+
         // на saved-movies - на каждой сохраненной (то есть isOwn) - крестик
     }
 
@@ -39,9 +39,13 @@ export default function MoviesCard({ movie }) {
 
     // смена формата длины фильма:
     function toHoursAndMinutes(totalMinutes) {
-        const hours = Math.floor(totalMinutes / 60);
-        const minutes = totalMinutes % 60;
-        return `${hours}ч ${minutes}м`;
+        if (totalMinutes < 60) {
+            return `${totalMinutes}м`;
+        } else {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return `${hours}ч ${minutes}м`;
+        }
       }
 
 
@@ -49,7 +53,7 @@ export default function MoviesCard({ movie }) {
         <li className="moviesCard">
             <img
             className="moviesCard__image"
-            src={ `https://api.nomoreparties.co/${movie.image.url}` }
+            src={ `https://api.nomoreparties.co/${movie.image.url}`}
             alt={ `обложка фильма ${ movie.nameRU }` }
             onMouseOver = { handleShowButton }
             onMouseLeave = { handleHideButton }
