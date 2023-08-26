@@ -2,34 +2,39 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css';
 
-export default function MoviesCardList({ movies, isShortOff }) {
-
+export default function MoviesCardList({ moviesToLocalStorage, isShortOff, handleSaveMovie, handleRemoveMovie, savedSearchResults }) {
+    
 
 
     return(
         <section className="moviesCardList">
             {isShortOff ? (
                 <ul className="moviesCardList__gallery">
-                    {movies.filter((item) => item.duration < 60).map((item) => (
+                    {moviesToLocalStorage.filter((item) => item.duration < 60).map((item) => (
                         <MoviesCard
-                        key = { item.movieId }
+                        key = { item.id }
                         movie = { item }
+                        handleSaveMovie = { handleSaveMovie }
+                        handleRemoveMovie = { handleRemoveMovie }
                          />
                     ))
                 }
                 </ul>
             ) : (
             <ul className="moviesCardList__gallery">
-                {movies.map((item) => (
+                {
+                    moviesToLocalStorage.map((item) => (
                         <MoviesCard
-                        key = { item.movieId }
+                        key = { item.id }
                         movie = { item }
+                        handleSaveMovie = { handleSaveMovie }
+                        handleRemoveMovie = { handleRemoveMovie }
                          />
                     ))
                 }
             </ul>
             )}
-            <button type="button" className="moviesCardList__showmore">Ещё</button> 
+            {/* <button type="button" className="moviesCardList__showmore">Ещё</button>  */}
         </section>
     )
 };
