@@ -5,3 +5,11 @@
     align-items: center;
     margin: 0;
 }
+
+.movies__error {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+}

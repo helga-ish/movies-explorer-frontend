@@ -19,20 +19,17 @@
 }
 
 .moviesCard__button {
-    visibility: hidden;
     position: absolute;
     top: 14px;
     right: 14px;
     outline: none;
     border: none;
+    transition: opacity .5s;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer;
 }
 
-.moviesCard__button_type_visible {
-    visibility: visible;
-}
 
 .moviesCard__button_type_notsaved {
     border-radius: 30px;
@@ -51,12 +48,14 @@
 
 .moviesCard__button_type_saved {
     background-image: url(../../images/savedButton.svg);
+    background-color: transparent;
     width: 21px;
     height: 21px;
 }
 
 .moviesCard__button_type_remove {
     background-image: url(../../images/removeButton.svg);
+    background-color: transparent;
     width: 21px;
     height: 21px;
 }
