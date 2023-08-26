@@ -90,7 +90,7 @@ export const saveMovie = (movie) => {
             authorization: `Bearer ${localStorage.getItem('token')}`,
             'content-type': 'application/json'
           },
-        body: JSON.stringify({ movie })
+        body: JSON.stringify( movie )
     }).then((res) => {
         return checkResponse(res);
     });
