@@ -5,10 +5,11 @@ import searchFormToggle from '../../images/searchFormToggle.svg';
 import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
 import useForm from "../../hooks/useForm";
 
-export default function SearchForm({ findMovies, setIsShortOff }) {
+export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm }) {
+
 
     const stateSchema = {
-        query: { value: '', error: ''},
+        query: { value: searchTerm, error: ''},
     };
 
     const validationStateSchema = {
@@ -26,9 +27,13 @@ export default function SearchForm({ findMovies, setIsShortOff }) {
         validationStateSchema,
         handleSubmit
       );
+    
+    const handleOnChangeWithSearchTerm = (e) => {
+        setSearchTerm(e.target.value);
+    }
 
     function handleSubmit() {
-        findMovies(state.query.value);
+        findMovies(searchTerm);
     }
 
     // short films filter
@@ -56,8 +61,11 @@ export default function SearchForm({ findMovies, setIsShortOff }) {
                     id="query" 
                     placeholder="Фильм"
                     required 
-                    onChange={ handleOnChange }
-                    value = { state.query.value }
+                    onChange={(e) => {
+                        handleOnChange(e);
+                        handleOnChangeWithSearchTerm(e);
+                    }}
+                    value = { searchTerm }
                     />
                     <input 
                     className="searchForm__button" 
@@ -76,3 +84,5 @@ export default function SearchForm({ findMovies, setIsShortOff }) {
         </section>
     )
 };
+
+// при обновлении и подставлении searchTerm в поисковую строку кнопка Найти не разблокируется, пока не начнешь печатать что-то в поле
