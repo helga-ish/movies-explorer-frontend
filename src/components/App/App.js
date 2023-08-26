@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, useNavigate} from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import './App.css';
 import Main from '../Main/Main.js';
 import Login from '../Login/Login.js';
@@ -18,6 +18,7 @@ import ProtectedRoute from '../../utils/protectRoute';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // loggedIn state related
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -26,19 +27,26 @@ function App() {
       setLoggedIn(true);
   }
   
-  React.useEffect (() => {
+  // checking token
+  const [isTokenRight, setIsTokenRight] = React.useState(false);
+
+  React.useEffect(() => {
     checkToken();
   }, [])
 
   const checkToken = () => {
       if (localStorage.getItem('token')) {
-          const token = localStorage.getItem('token');
-          auth.getEmail(token).then(() => {
-                  handleLogin();
-                  navigate('/movies', {replace: true})
-          })
-          .catch((error) => console.error('При авторизации произошла ошибка.'));
-      }   
+        handleLogin();
+        setIsTokenRight(true);
+        navigate(location.pathname, {replace: true});
+          // const token = localStorage.getItem('token');
+          // auth.getEmail(token).then(() => {
+          //         handleLogin();
+          // })
+          // .catch((error) => console.error('При авторизации произошла ошибка.'));
+      } else {
+        navigate('/signin', {replace: true});
+      }
   }
 
   // get user info for profile page
@@ -81,6 +89,8 @@ function App() {
     localStorage.removeItem('token');
     setLoggedIn(false);
     navigate('/signin', {replace: true});
+    localStorage.removeItem('searchResults');
+    localStorage.removeItem('searchWord');
   }
 
 
@@ -97,7 +107,7 @@ function App() {
             <Main />
           } />
 
-          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
+          <Route element={<ProtectedRoute isTokenRight={isTokenRight} />}>
             <Route path='/profile' element={
               <Profile
               onUpdateUser = { handleUpdateUser }
@@ -112,7 +122,6 @@ function App() {
 
             <Route path='/saved-movies' element={
               <SavedMovies
-              loggedIn = { loggedIn }
               />
             } />
 
