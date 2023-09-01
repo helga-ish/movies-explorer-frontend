@@ -4,12 +4,14 @@ import searchFormIcon from '../../images/searchFormIcon.svg';
 import searchFormToggle from '../../images/searchFormToggle.svg';
 import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
 import useForm from "../../hooks/useForm";
+import { useLocation } from "react-router-dom";
 
-export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm }) {
+export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm, searchForMovies }) {
 
+    const location = useLocation();
 
     const stateSchema = {
-        query: { value: searchTerm, error: ''},
+        query: { value: '', error: ''}, // removed searchTerm from value
     };
 
     const validationStateSchema = {
@@ -33,7 +35,11 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
     }
 
     function handleSubmit() {
-        findMovies(searchTerm);
+        if(location.pathname === '/movies') {
+            findMovies(searchTerm);
+        } else if(location.pathname === '/saved-movies') {
+            searchForMovies(state.query.value)
+        }
     }
 
     // short films filter
@@ -54,19 +60,32 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
              <form className="searchForm" action="/search" method="get">
                 <fieldset className='searchForm__container'>
                     <img className="searchForm__icon" alt='searchIcon' src={ searchFormIcon }/>
-                    <input
-                    className="searchForm__field" 
-                    type="text" 
-                    name="query" 
-                    id="query" 
-                    placeholder="Фильм"
-                    required 
-                    onChange={(e) => {
-                        handleOnChange(e);
-                        handleOnChangeWithSearchTerm(e);
-                    }}
-                    value = { searchTerm }
-                    />
+                    {location.pathname === '/movies' ? (
+                        <input
+                        className="searchForm__field" 
+                        type="text" 
+                        name="query" 
+                        id="query" 
+                        placeholder="Фильм"
+                        required 
+                        onChange={(e) => {
+                            handleOnChange(e);
+                            handleOnChangeWithSearchTerm(e);
+                        }}
+                        value = { searchTerm }
+                        />
+                    ) : (
+                        <input
+                        className="searchForm__field" 
+                        type="text" 
+                        name="query" 
+                        id="query" 
+                        placeholder="Фильм"
+                        required 
+                        onChange = { handleOnChange }
+                        value = { state.query.value }
+                        />
+                    )}
                     <input 
                     className="searchForm__button" 
                     type="submit" 

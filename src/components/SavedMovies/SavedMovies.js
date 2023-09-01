@@ -5,7 +5,7 @@ import './SavedMovies.css';
 import * as auth from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 
-export default function SavedMovies({ loggedIn }) {
+export default function SavedMovies() {
     // empty array
     const [isEmpty, setIsEmpty] = React.useState(false);
 
@@ -13,7 +13,6 @@ export default function SavedMovies({ loggedIn }) {
      const [isShortOff, setIsShortOff] = React.useState(false);
 
     // emphasize saved movies for saved buttons
-        // const [isSaved, setIsSaved] = React.useState(false);
 
     // remove
         function handleRemoveMovie(movie) {
@@ -23,7 +22,6 @@ export default function SavedMovies({ loggedIn }) {
                 setMovies((state) => state.filter(function(m) {
                     return m.movieId !== movie.movieId;
                 }))
-                // setIsSaved(false);
             })
             .catch((error) => {
                 console.error(`Ошибка загрузки данных с сервера: ${error}`);
@@ -38,9 +36,8 @@ export default function SavedMovies({ loggedIn }) {
     
      // getting movies
         const [movies, setMovies] = React.useState([]);
-    
-        React.useEffect(() => {
-            setIsLoading(true);
+
+        const getMoviesFromApi = () => {
             auth.getSavedMovies()
             .then((items) => {
                 setMovies(
@@ -67,9 +64,14 @@ export default function SavedMovies({ loggedIn }) {
             .finally(() => {
                 setIsLoading(false);
             });
+        }
+    
+        React.useEffect(() => {
+            setIsLoading(true);
+            getMoviesFromApi();
         }, [])
 
-        const findMovies = (filterParam) => {
+        const searchForMovies = (filterParam) => {
             setIsLoading(true);
             const filteredMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
             setMovies(
@@ -81,11 +83,14 @@ export default function SavedMovies({ loggedIn }) {
             setIsLoading(false);
         }
 
+        //compering ids
+        const idsArrayWithSavedMovies = movies.map(item => item.movieId);
+
     return(
         <main>
             <section className="saved-movies">
                 <SearchForm
-                    findMovies = { findMovies }
+                    searchForMovies = { searchForMovies }
                     setIsShortOff = { setIsShortOff }
                 />
                 {isLoading ? (
@@ -101,6 +106,7 @@ export default function SavedMovies({ loggedIn }) {
                                 movies = { movies }
                                 isShortOff = { isShortOff }
                                 handleRemoveMovie = { handleRemoveMovie }
+                                idsArrayWithSavedMovies = { idsArrayWithSavedMovies }
                             />
                             )
                         )

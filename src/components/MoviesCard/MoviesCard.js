@@ -8,36 +8,46 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
 
     const location = useLocation();
 
+    // стейт с сохраненными карточками
+    const [savedCards, setSavedCards] = React.useState([]);
+
+    const handleSaveClick = (id) => {
+        if (savedCards.includes(id)) {
+        setSavedCards(savedCards.filter(cardId => cardId !== id));
+        } else {
+        setSavedCards([...savedCards, id]);
+        }
+    };
+    
+    const isCardSaved = (id) => savedCards.includes(id);
+
     // проверить, добавлена ли карточка в сохраненные
     const currentUser = React.useContext(CurrentUserContext);
     const isOwn = movie.owner === currentUser._id;
 
     // нажатие на кнопку "сохранить", смена стейта сохраненности, сохранение фильма в нашу БД, затем удаление из нее:
-    const [isSaved, setIsSaved] = React.useState(false);
 
     function handleSaving() {
         handleSaveMovie(movie);
-        setIsSaved(true);
-        // смена иконки сохранение на галочку (галочка не появляется в зависимости от ховера, а всегда на месте)
-        // запрос к нашей апи на добавление/сохранение фильма - createMovie, при возвращении в объекте уже будет owner, возвращает объект data: movie
+        handleSaveClick(movie.movieId)
 
-        // на saved-movies - на каждой сохраненной (то есть isOwn) - крестик
+        // смена иконки сохранение на галочку (галочка не появляется в зависимости от ховера, а всегда на месте)
+
     }
 
     function handleRemoving() {
        handleRemoveMovie(movie);
-       setIsSaved(false);
     }
 
     // появление кнопки "сохранить" при наведении на картинку:
-    // const [isHovered, setIsHovered] = React.useState(false);
-    // const handleShowButton = (e) => {
-    //     setIsHovered(true);
-    // };
+    const [showSaveButton, setShowSaveButton] = React.useState(false);
+    const handleShowButton = (e) => {
+        setShowSaveButton(true);
+    };
 
-    // const handleHideButton = (e) => {
-    //     setIsHovered(false);
-    // };
+    const handleHideButton = (e) => {
+        setShowSaveButton(false);
+    };
 
     // переход на трейлер по клику на картинку:
     const handleRedirectionClick = () => {
@@ -56,42 +66,48 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
       }
 
 
+
     return(
-        <li className="moviesCard">
-            <img
-            className="moviesCard__image"
-            src={ `https://api.nomoreparties.co/${movie.image.url}`}
-            alt={ `обложка фильма ${ movie.nameRU }` }
-            // onMouseEnter = { handleShowButton }
-            // onMouseLeave = { handleHideButton }
-            onClick = { handleRedirectionClick }
-            />
-            {isSaved ? (
-                <button className="moviesCard__button moviesCard__button_type_saved" type="button"/>
-            ) : (
-                location.pathname === '/saved-movies' && isOwn ? (
-                <button
+        <li className="moviesCard"
+        >
+            <div
+            className="moviesCard__block"
+            onMouseEnter = { handleShowButton }
+            onMouseLeave = { handleHideButton } 
+            >
+                <img
+                className="moviesCard__image"
+                src={ `https://api.nomoreparties.co/${movie.image.url}`}
+                alt={ `обложка фильма ${ movie.nameRU }` }
+                onClick = { handleRedirectionClick }
+                />
+                {movie.isSaved ? (
+                    <button className="moviesCard__button moviesCard__button_type_saved" type="button"/>
+                ) : (
+                    location.pathname === '/saved-movies' && isOwn ? (
+                        <button
+                        className="moviesCard__button moviesCard__button_type_remove"
+                        type="button"
+                        onClick = { handleRemoving }
+                        />
+                    ) : (
+                        showSaveButton && 
+                        <button
+                        className ={`moviesCard__button moviesCard__button_type_notsaved `}
+                        type = "button"
+                        onClick = { handleSaving }
+                        >
+                        Сохранить
+                        </button>
+                    )
+                )}
+                {location.pathname === '/saved-movies' && isOwn && <button
                 className="moviesCard__button moviesCard__button_type_remove"
                 type="button"
                 onClick = { handleRemoving }
-                />
-                ) : (
-                    <button
-                    className ={`moviesCard__button moviesCard__button_type_notsaved `}
-                    type = "button"
-                    onClick = { handleSaving }
-                    >
-                        Сохранить
-                    </button>
-                )
-            )}
-            {
-            }
-            {location.pathname === '/saved-movies' && isOwn && <button
-            className="moviesCard__button moviesCard__button_type_remove"
-            type="button"
-            onClick = { handleRemoving }
-            />}
+                />}
+            </div>
+            
             <div className="moviesCard__container">
                 <h2 className="moviesCard__name">{ movie.nameRU }</h2>
                 <p className="moviesCard__length">{ toHoursAndMinutes(movie.duration) }</p>
@@ -99,3 +115,5 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
         </li>
     )
 };
+
+// несохранение статуса карточки, которая подгружается с апи

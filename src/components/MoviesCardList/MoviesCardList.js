@@ -1,16 +1,31 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css';
+import { useLocation } from 'react-router-dom';
+import * as auth from '../../utils/MainApi';
 
-export default function MoviesCardList({ moviesToLocalStorage, isShortOff, handleSaveMovie, handleRemoveMovie, savedSearchResults }) {
+export default function MoviesCardList({
+    shortMoviesFilteredAndSliced,
+    moviesSliced,
+    foundMovies,
+    isShortOff,
+    handleSaveMovie,
+    handleRemoveMovie,
+    visibleCardCount,
+    handleClick,
+    movies,
+    }) {
     
+    const location = useLocation();
+
 
 
     return(
         <section className="moviesCardList">
-            {isShortOff ? (
+            {location.pathname === '/movies' ? (
+                isShortOff ? (
                 <ul className="moviesCardList__gallery">
-                    {moviesToLocalStorage.filter((item) => item.duration < 60).map((item) => (
+                    {shortMoviesFilteredAndSliced.map((item) => (
                         <MoviesCard
                         key = { item.id }
                         movie = { item }
@@ -23,7 +38,7 @@ export default function MoviesCardList({ moviesToLocalStorage, isShortOff, handl
             ) : (
             <ul className="moviesCardList__gallery">
                 {
-                    moviesToLocalStorage.map((item) => (
+                    moviesSliced.map((item) => (
                         <MoviesCard
                         key = { item.id }
                         movie = { item }
@@ -33,19 +48,50 @@ export default function MoviesCardList({ moviesToLocalStorage, isShortOff, handl
                     ))
                 }
             </ul>
-            )}
-            {/* <button type="button" className="moviesCardList__showmore">Ещё</button>  */}
+            )) : (
+                isShortOff ? (
+                        <ul className="moviesCardList__gallery">
+                            {
+                            movies.filter((item) => item.duration <= 60).map((item) => (
+                                <MoviesCard
+                                key = { item.id }
+                                movie = { item }
+                                handleSaveMovie = { handleSaveMovie }
+                                handleRemoveMovie = { handleRemoveMovie }
+                                />
+                            ))
+                        }
+                        </ul>
+                ) : (
+                    <ul className="moviesCardList__gallery">
+                        {
+                            movies.map((item) => (
+                                <MoviesCard
+                                key = { item.id }
+                                movie = { item }
+                                handleSaveMovie = { handleSaveMovie }
+                                handleRemoveMovie = { handleRemoveMovie }
+                                />
+                            )
+                            )
+                        }
+                    </ul>
+                    )
+                )
+            }
+            {location.pathname === '/movies' ? (
+                (visibleCardCount >= foundMovies.length) ? (
+                <></>
+            ) : (
+                <button type="button" className="moviesCardList__showmore" onClick = { handleClick }>Ещё</button>
+            )
+        ) : (
+            <></>
+        )
+        }
         </section>
     )
 };
-
-// кнопки Еще не должно быть, если фильмов меньше, чем должно быть на странице: 4 ряда карточек всегда, кроме 320px - 480px - 5 карточек в один ряд
-// кнопка появляется, когда количество выходит за допустимое значение
-// Ширина 1280px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
-// Ширина 768px — 4 ряда карточек. Кнопка «Ещё» загружает дополнительный ряд карточек.
-// Ширина от 320px до 480px — 5 карточек по 1 в ряд. Кнопка «Ещё» загружает по 2 карточки.
-
-// хранение результатов пред поиска в localStorage (удалять при signout), не надо для сохраненных, устанавливать текст в строке поиска и отображат ранее найденные фильмы
 
 // переключатель короткометражек: нужно ли писать "не найдено" при отсутствии короткометражек?
 
