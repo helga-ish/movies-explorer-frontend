@@ -9,8 +9,9 @@
 .moviesCardList__gallery {
     list-style: none;
     max-width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 360px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     row-gap: 60px;
     column-gap: 30px;
     padding: 0;
@@ -40,15 +41,12 @@
     opacity: .7;
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 920px) {
     
     .moviesCardList__gallery {
-        grid-template-columns: repeat(2, 339px);
         row-gap: 45px;
         margin-top: 0;
         margin-bottom: 0;
-        margin-left: 30px;
-        margin-right: 30px;
     }
     
     .moviesCardList__showmore {
@@ -63,9 +61,6 @@
     }
 
     .moviesCardList__gallery {
-        grid-template-columns: 300px;
-        grid-template-rows: repeat(5, 1fr);
-        column-gap: 0;
         row-gap: 36px;
         margin-left: 10px;
         margin-right: 10px;

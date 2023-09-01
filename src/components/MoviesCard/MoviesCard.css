@@ -1,17 +1,24 @@
 .moviesCard {
     list-style: none;
     min-height: 201px;
-    max-width: 360px;
+    width: calc((100% - 200px) / 3);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     background-color: white;
+}
+
+.moviesCard__block {
+    display: flex;
+    width: 100%;
+    height: 100%;
     position: relative;
+    border-radius: 8px;
 }
 
 .moviesCard__image {
     cursor: pointer;
-    max-width: 100%;
+    width: 100%;
     height: 201px;
     object-fit: cover;
     object-position: center;
@@ -66,13 +73,11 @@
 
 
 .moviesCard__container {
-    margin: auto;
-    margin-top: 12px;
-    margin-bottom: 0;
-    display: grid;
-    grid-template-columns: 250px 44px;
-    grid-template-rows: auto;
-    column-gap: 34px;
+    margin: 12px 14px 0 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: calc(100% - 90%);
 }
 
 .moviesCard__name {
@@ -83,6 +88,7 @@
     line-height: normal;
     overflow: hidden;
     margin: 0;
+    width: calc(100% - 30%);
 }
 
 .moviesCard__length {
@@ -100,9 +106,9 @@
     margin: 0;
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 920px) {
     .moviesCard {
-        max-width: 339px;
+        width: calc((100% - 90px) / 2);
     }
 
     .moviesCard__image {
@@ -114,7 +120,6 @@
         padding-top: 25px;
         margin-left: 0;
         margin-right: 0;
-        column-gap: 39px;
     }
 
     .moviesCard__name {
@@ -125,9 +130,6 @@
 }
 
 @media screen and (max-width: 760px) {
-    .moviesCard {
-        max-width: 300px;
-    }
 
     .moviesCard__image {
         height: 168px;
@@ -143,8 +145,6 @@
         margin-right: 0;
         margin-top: 0;
         padding-top: 16px;
-        grid-template-columns: 240px 52px;
-        column-gap: 3px;
     }
     
     .moviesCard__name {
@@ -153,5 +153,17 @@
 
     .moviesCard__length {
         padding: 3px 4px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .moviesCard {
+        width: calc((100% - 60px) / 2);
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .moviesCard {
+        width: 300px;
     }
 }
