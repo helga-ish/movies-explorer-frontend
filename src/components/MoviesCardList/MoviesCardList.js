@@ -52,7 +52,7 @@ export default function MoviesCardList({
                 isShortOff ? (
                         <ul className="moviesCardList__gallery">
                             {
-                            movies.filter((item) => item.duration <= 60).map((item) => (
+                            movies.filter((item) => item.duration >= 40).map((item) => (
                                 <MoviesCard
                                 key = { item.id }
                                 movie = { item }

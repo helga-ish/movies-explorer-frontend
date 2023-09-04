@@ -7,32 +7,14 @@ import { useLocation } from 'react-router-dom';
 export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) { 
 
     const location = useLocation();
-
-    // стейт с сохраненными карточками
-    const [savedCards, setSavedCards] = React.useState([]);
-
-    const handleSaveClick = (id) => {
-        if (savedCards.includes(id)) {
-        setSavedCards(savedCards.filter(cardId => cardId !== id));
-        } else {
-        setSavedCards([...savedCards, id]);
-        }
-    };
-    
-    const isCardSaved = (id) => savedCards.includes(id);
-
-    // проверить, добавлена ли карточка в сохраненные
     const currentUser = React.useContext(CurrentUserContext);
     const isOwn = movie.owner === currentUser._id;
+    const isSaved = movie.isSaved === true;
 
-    // нажатие на кнопку "сохранить", смена стейта сохраненности, сохранение фильма в нашу БД, затем удаление из нее:
+    // нажатие на кнопку "сохранить", сохранение фильма в нашу БД, затем удаление из нее:
 
     function handleSaving() {
         handleSaveMovie(movie);
-        handleSaveClick(movie.movieId)
-
-        // смена иконки сохранение на галочку (галочка не появляется в зависимости от ховера, а всегда на месте)
-
     }
 
     function handleRemoving() {
@@ -65,7 +47,9 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
         }
       }
 
-
+      const cardSaveButtonClassName = ( 
+        `moviesCard__button ${isSaved && 'moviesCard__button_type_saved'}` 
+      );
 
     return(
         <li className="moviesCard"
@@ -82,7 +66,7 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
                 onClick = { handleRedirectionClick }
                 />
                 {movie.isSaved ? (
-                    <button className="moviesCard__button moviesCard__button_type_saved" type="button"/>
+                    <button className={ cardSaveButtonClassName } type="button"/>
                 ) : (
                     location.pathname === '/saved-movies' && isOwn ? (
                         <button

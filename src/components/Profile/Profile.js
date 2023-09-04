@@ -1,6 +1,6 @@
 import '../Form/Form.css';
 import './Profile.css';
-import React, { useState } from "react";
+import React from "react";
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from "../../hooks/useForm";
@@ -8,6 +8,14 @@ import useForm from "../../hooks/useForm";
 export default function Profile({ onUpdateUser, onSignOut, isError }) {
 
     const currentUser = React.useContext(CurrentUserContext);
+
+    React.useEffect(() => {
+        setUserName(currentUser.name);
+        setUserEmail(currentUser.email);
+      }, [currentUser]); 
+
+    const [userName, setUserName] = React.useState('');
+    const [userEmail, setUserEmail] = React.useState('');
 
     const [isInEditMode, setIsInEditMode] = React.useState(false);
     function goToEditMode() {
@@ -24,7 +32,6 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
 
     const validationStateSchema = {
         name: {
-            required: true,
             validator: {
                 regEx: /^[a-zA-Zа-яА-я- ]{2,30}$/,
                 error: 'Что-то пошло не так...',
@@ -32,7 +39,6 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
         },
 
         email: {
-            required: true,
             validator: {
             regEx: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
             error: 'Что-то пошло не так...',
@@ -49,39 +55,48 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
     function handleSubmit(state) {
         finishEditMode();
         return onUpdateUser({
-            name: state.name.value,
-            email: state.email.value,
+            name: userName,
+            email: userEmail,
             });
         }
+
     return(
         <main>
             <section className='profile' id='profile'>
                 <form className="form profile__form" name='profileForm'>
-                    <h1 className="form__heading profile__form-heading">{`Привет, ${ currentUser.name }!`}</h1>
+                    <h1 className="form__heading profile__form-heading">{`Привет, ${ userName }!`}</h1>
                     <fieldset className="form__fields profile__form-fields">
                         <label className="form__label profile__form-label" for='name'>Имя</label>
                         <input
                             type='text'
-                            placeholder={ currentUser.name }
+                            placeholder='Имя'
                             className={ `form__field form__field_type_name profile__form-field ${isInEditMode ? 'profile__form-field_active' : ''}` } 
                             id="name" 
                             name="name"
                             minLength="2"
                             maxLength="30"
                             required
-                            onChange={ handleOnChange }
+                            onChange={(e) => {
+                                handleOnChange(e);
+                                setUserName(e.target.value)
+                            }}
+                            value={ userName || '' }
                         />
 
                         <label className="form__label profile__form-label" for='email'>E-mail</label>
                         <input
                             type='email'
-                            placeholder={ currentUser.email }
+                            placeholder='E-mail'
                             className={ `form__field form__field_type_email profile__form-field ${isInEditMode ? 'profile__form-field_active' : ''}` } 
                             id="email" 
                             name="email" 
                             minLength="8" 
                             required
-                            onChange={ handleOnChange }
+                            onChange={(e) => {
+                                handleOnChange(e);
+                                setUserEmail(e.target.value)
+                            }}
+                            value={ userEmail || '' }
                         />
 
                     </fieldset>

@@ -10,6 +10,10 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
 
     const location = useLocation();
 
+    React.useEffect(() => {
+        setIsToggleOff(JSON.parse(localStorage.getItem('toggleOff')));
+    }, [])
+
     const stateSchema = {
         query: { value: '', error: ''}, // removed searchTerm from value
     };
@@ -47,11 +51,15 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
     function handleToggleOff() {
         setIsToggleOff(true);
         setIsShortOff(true);
+        localStorage.setItem('toggleOff', true);
+        localStorage.setItem('shortOff', true);
     }
 
     function handleToggleOn() {
         setIsToggleOff(false);
         setIsShortOff(false);
+        localStorage.setItem('toggleOff', false);
+        localStorage.setItem('shortOff', false);
     }
 
 

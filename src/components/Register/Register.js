@@ -1,7 +1,7 @@
 import Form from "../Form/Form";
 import '../Form/Form.css';
 import React from "react";
-import * as auth from '../../utils/MainApi';
+import * as mainApi from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
 import useForm from "../../hooks/useForm";
 
@@ -41,7 +41,7 @@ export default function Register() {
       };
 
       const handleSubmit = (state) => {
-        auth.register(state)
+        mainApi.register(state)
           .then((data) => {
             if(data.token) {
               navigate("/movies", {replace: true})

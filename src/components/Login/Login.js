@@ -1,7 +1,7 @@
 import Form from "../Form/Form";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import * as auth from '../../utils/MainApi';
+import * as mainApi from '../../utils/MainApi';
 import useForm from "../../hooks/useForm";
 
 export default function Login({ checkToken, handleLogin }) {
@@ -42,7 +42,7 @@ export default function Login({ checkToken, handleLogin }) {
 
       const handleSubmit = (state) => {
         handleIsNoError();
-        auth.login(state.email.value, state.password.value)
+        mainApi.login(state.email.value, state.password.value)
           .then((data) => {
             if(data.token) {
               handleLogin();

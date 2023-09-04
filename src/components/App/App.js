@@ -11,24 +11,23 @@ import Header from "../Header/Header";
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Error404 from '../Error404/Error404';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
-import * as auth from '../../utils/MainApi';
+import * as mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../../utils/protectRoute';
-// import * as api from '../../utils/MoviesApi';
+import * as movieApi from '../../utils/MoviesApi';
 
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
-  // loggedIn state related
+  // loggedIn стейт
   const [loggedIn, setLoggedIn] = React.useState(false);
 
   const handleLogin = () => {
       setLoggedIn(true);
   }
   
-  // checking token
-  const [isTokenRight, setIsTokenRight] = React.useState(false);
+  // проверка token
 
   React.useEffect(() => {
     checkToken();
@@ -36,24 +35,23 @@ function App() {
 
   const checkToken = () => {
       if (localStorage.getItem('token')) {
-        handleLogin();
-        setIsTokenRight(true);
-        navigate(location.pathname, {replace: true});
-          // const token = localStorage.getItem('token');
-          // auth.getEmail(token).then(() => {
-          //         handleLogin();
-          // })
-          // .catch((error) => console.error('При авторизации произошла ошибка.'));
-      } else {
-        navigate('/signin', {replace: true});
+        const token = localStorage.getItem('token');
+        mainApi.getEmail(token)
+        .then(() => {
+            handleLogin();
+            navigate('/movies', {replace: true})
+        })
+        .catch((error) => {
+          console.error('При авторизации произошла ошибка.')
+        });
       }
   }
 
-  // get user info for profile page
+  // получение информации о пользователе на странице профиля
   const [currentUser, setCurrentUser] = React.useState({});
 
   React.useEffect(() => {
-    auth.getProfileUserInfo()
+    mainApi.getProfileUserInfo()
     .then((userData) => {
         setCurrentUser(userData.data);
     })
@@ -62,7 +60,7 @@ function App() {
     })
   }, [loggedIn]);
 
-  // update user info on the profile page
+  // update информации о пользователе на странице профиля
 
   const [isError, setIsError] = React.useState(false);
   function handleIsError() {
@@ -73,7 +71,7 @@ function App() {
   }
 
   function handleUpdateUser(object) {
-    auth.changeProfileUserInfo(object)
+    mainApi.changeProfileUserInfo(object)
     .then((newUserData) => {
         handleIsNoError();
         setCurrentUser(newUserData.data)
@@ -84,16 +82,92 @@ function App() {
     })
   }
 
-  // signout on the profile page
+  // signout на странице профиля
   function handleSignOut() {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
-    navigate('/signin', {replace: true});
-    localStorage.removeItem('searchResults');
-    localStorage.removeItem('searchWord');
+      localStorage.removeItem('token');
+      setLoggedIn(false);
+      navigate('/signin', {replace: true});
+      localStorage.removeItem('searchResults');
+      localStorage.removeItem('searchWord');
+      localStorage.removeItem('toggleOff');
+      localStorage.removeItem('shortOff');
   }
 
+  // получение сохраненных фильмов с апи
+  function getSavedMovies(setSavedMoviesFunction) {
+    setIsLoading(true)
+    mainApi.getSavedMovies()
+    .then((items) => {
+      setSavedMoviesFunction(
+            items.data.map((item) => ({
+                owner: item.owner,
+                country: item.country,
+                director: item.director,
+                duration: item.duration,
+                year: item.year,
+                description: item.description,
+                image: item.image,
+                trailerLink: item.trailerLink,
+                nameRU: item.nameRU,
+                nameEN: item.nameEN,
+                thumbnail: item.thumbnail,
+                movieId: item.movieId,
+            }))
+        )
+    })
+    .catch((error) => {
+        setIsServerError(true);
+        console.error(`Ошибка загрузки данных с сервера: ${error}`);
+    })
+    .finally(() => {
+        setIsLoading(false);
+    });
+  }
 
+  // загрузка найденных фильмов с апи фильмов для /movies
+  const fetchAllMovies = (filterParam) => {
+    movieApi.getAllMovies()
+    .then((data) => {
+      setIsLoading(true)
+      setIsError(false);
+      const filteredData = data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
+      localStorage.setItem(('searchResults'), JSON.stringify(
+              filteredData.map((item) => ({
+                  country: item.country,
+                  director: item.director,
+                  duration: item.duration,
+                  year: item.year,
+                  description: item.description,
+                  image: item.image,
+                  trailerLink: item.trailerLink,
+                  nameRU: item.nameRU,
+                  nameEN: item.nameEN,
+                  thumbnail: item.thumbnail,
+                  movieId: item.id,
+              }))
+      ))
+      if(filteredData.length === 0) {
+          setIsEmpty(true);
+      }
+      localStorage.setItem('searchWord', filterParam);
+    })
+    .catch((error) => {
+        setIsError(true);
+        console.log(`Ошибка загрузки данных с сервера: ${error}`);
+    })
+    .finally(() => {
+        setIsLoading(false);
+    })
+  }
+
+  // прелоадер
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  // ошибка при загрузке фильмов
+  const [isServerError, setIsServerError] = React.useState(false);
+
+  // стейт для пустого результата поиска
+  const [isEmpty, setIsEmpty] = React.useState(false);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -107,7 +181,7 @@ function App() {
             <Main />
           } />
 
-          <Route element={<ProtectedRoute isTokenRight={isTokenRight} />}>
+          <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route path='/profile' element={
               <Profile
               onUpdateUser = { handleUpdateUser }
@@ -117,11 +191,20 @@ function App() {
             } />
 
             <Route path='/movies' element={
-              <Movies />
+              <Movies
+              getSavedMovies = { getSavedMovies }
+              fetchAllMovies = { fetchAllMovies }
+              isLoading = { isLoading }
+              isServerError = { isServerError }
+              isEmpty = { isEmpty }
+              />
             } />
 
             <Route path='/saved-movies' element={
               <SavedMovies
+              getSavedMovies = { getSavedMovies }
+              isLoading = { isLoading }
+              isServerError = { isServerError }
               />
             } />
 

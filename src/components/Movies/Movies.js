@@ -2,14 +2,13 @@ import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import './Movies.css';
-import * as api from '../../utils/MoviesApi';
+// import * as api from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
-import * as auth from '../../utils/MainApi';
+import * as mainApi from '../../utils/MainApi';
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
-export default function Movies() {
-    // card counting
-
+export default function Movies({ getSavedMovies, fetchAllMovies, isLoading, isEmpty, isServerError }) {
+    // отображение нужного числа карточек и дозагрузка с "Еще"
     const LG_ROW_CARD_COUNT = 3;
     const MD_ROW_CARD_COUNT = 2;
     const SM_ROW_CARD_COUNT = 2;
@@ -56,42 +55,21 @@ export default function Movies() {
 
         }
 
-    // adding movie to the saved movies
+    // обращаемся к апи за сохраненками, чтобы потом сравнить два массива и найти сохраненные для отображения значка сохраненности
+    const [savedMovies, setSavedMovies] = React.useState([]);
+
+    React.useEffect(() => {
+        getSavedMovies(setSavedMovies); 
+    }, [])
+
+    // добавление фильма в сохраненные
     function handleSaveMovie(movie) {
-        auth.saveMovie(movie)
+        mainApi.saveMovie(movie)
         .then(() => {
             console.log('Успешно сохранено.');
         })
         .catch((error) => console.error(`Ошибка загрузки данных с сервера: ${error}`));
     }
-
-
-    const [savedMovies, getSavedMovies] = React.useState([]);
-
-    React.useEffect(() => {
-        auth.getSavedMovies()
-        .then((items) => {
-            getSavedMovies(
-                items.data.map((item) => ({
-                    owner: item.owner,
-                    country: item.country,
-                    director: item.director,
-                    duration: item.duration,
-                    year: item.year,
-                    description: item.description,
-                    image: item.image,
-                    trailerLink: item.trailerLink,
-                    nameRU: item.nameRU,
-                    nameEN: item.nameEN,
-                    thumbnail: item.image.formats.thumbnail.url,
-                    movieId: item.movieId,
-                }))
-            )
-        })
-        .catch((error) => {
-            console.error(`Ошибка загрузки данных с сервера: ${error}`);
-        })  
-    }, [])
 
     function compareArrays(array1, array2) {
         return array1.map((element1) => {
@@ -103,66 +81,21 @@ export default function Movies() {
         });
     }
 
-
-
-    // loading
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    // error instead of data
-    const [isError, setIsError] = React.useState(false);
-
-    // gettingMovies
+    // стейт с найденными фильмами
     const [foundMovies, setFoundMovies] = React.useState([]);
 
-    // empty array
-    const [isEmpty, setIsEmpty] = React.useState(false);
-
-    // short movies filter
+    // стейт для короткометражек
     const [isShortOff, setIsShortOff] = React.useState(false);
 
-    // api to get films
-    const fetchAllMovies = (filterParam) => {
-        api.getAllMovies()
-        .then((data) => {
-            setIsError(false);
-            const filteredData = data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
-            localStorage.setItem(('searchResults'), JSON.stringify(
-                    filteredData.map((item) => ({
-                        country: item.country,
-                        director: item.director,
-                        duration: item.duration,
-                        year: item.year,
-                        description: item.description,
-                        image: item.image,
-                        trailerLink: item.trailerLink,
-                        nameRU: item.nameRU,
-                        nameEN: item.nameEN,
-                        thumbnail: item.image.formats.thumbnail.url,
-                        movieId: item.id,
-                    }))
-            ))
-            if(filteredData.length === 0) {
-                setIsEmpty(true);
-            }
-            localStorage.setItem('searchWord', filterParam);
-            const savedSearchResults = JSON.parse(localStorage.getItem('searchResults'));
-            setFoundMovies(savedSearchResults);
-        })
-        .catch((error) => {
-            setIsError(true);
-            console.log(`Ошибка загрузки данных с сервера: ${error}`);
-        })
-        .finally(() => {
-            setIsLoading(false);
-        })
-    }
+    // загрузка фильмов: обращение к апи и добавление найденных фильмов в localStorage
 
     const findMovies = (filterParam) => {
-        setIsLoading(true);
         fetchAllMovies(filterParam);
+        const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+        setFoundMovies(searchResults);
     }
 
-    // save to localStorage
+    // загрузка данных из localStorage при монтировании страницы
     const [searchTerm, setSearchTerm] = React.useState('');
 
     React.useEffect(() => {
@@ -173,10 +106,12 @@ export default function Movies() {
             const savedSearchResults = JSON.parse(localStorage.getItem('searchResults'));
             const result = compareArrays(savedSearchResults, savedMovies);
             setFoundMovies(result);
+            const shortMoviesState = JSON.parse(localStorage.getItem('shortOff'));
+            setIsShortOff(shortMoviesState);
     }, [savedMovies]);
 
-    // variables
-    const shortMoviesFilteredAndSliced = foundMovies.filter((item) => item.duration < 60).slice(0, visibleCardCount);
+    // переменные для рендеринга
+    const shortMoviesFilteredAndSliced = foundMovies.filter((item) => item.duration > 40).slice(0, visibleCardCount);
     const moviesSliced = foundMovies?.slice(0, visibleCardCount);
 
     return(
@@ -191,7 +126,7 @@ export default function Movies() {
                 {isLoading ? (
                     <Preloader />
                     ) : (
-                    isError ? (
+                        isServerError ? (
                         <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</h2>
                         ) : (
                             isEmpty ? (

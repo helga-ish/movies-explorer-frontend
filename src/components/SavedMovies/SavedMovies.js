@@ -2,24 +2,23 @@ import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import './SavedMovies.css';
-import * as auth from '../../utils/MainApi';
+import * as mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 
-export default function SavedMovies() {
-    // empty array
-    const [isEmpty, setIsEmpty] = React.useState(false);
+export default function SavedMovies({ getSavedMovies, isLoading, isServerError }) {
 
     // short movies filter
      const [isShortOff, setIsShortOff] = React.useState(false);
 
-    // emphasize saved movies for saved buttons
+    // стейт для пустого результата поиска
+    const [isEmpty, setIsEmpty] = React.useState(false);
 
     // remove
         function handleRemoveMovie(movie) {
             console.log(movie);
-            auth.deleteMovie(movie.movieId)
+            mainApi.deleteMovie(movie.movieId)
             .then(() => {
-                setMovies((state) => state.filter(function(m) {
+                setSavedMovies((state) => state.filter(function(m) {
                     return m.movieId !== movie.movieId;
                 }))
             })
@@ -27,64 +26,27 @@ export default function SavedMovies() {
                 console.error(`Ошибка загрузки данных с сервера: ${error}`);
             });
         }
-
-    // loading
-        const [isLoading, setIsLoading] = React.useState(false);
-
-    // error instead of data
-        const [isError, setIsError] = React.useState(false);
     
-     // getting movies
-        const [movies, setMovies] = React.useState([]);
-
-        const getMoviesFromApi = () => {
-            auth.getSavedMovies()
-            .then((items) => {
-                setMovies(
-                    items.data.map((item) => ({
-                        owner: item.owner,
-                        country: item.country,
-                        director: item.director,
-                        duration: item.duration,
-                        year: item.year,
-                        description: item.description,
-                        image: item.image,
-                        trailerLink: item.trailerLink,
-                        nameRU: item.nameRU,
-                        nameEN: item.nameEN,
-                        thumbnail: item.image.formats.thumbnail.url,
-                        movieId: item.movieId,
-                    }))
-                )
-            })
-            .catch((error) => {
-                setIsError(true);
-                console.error(`Ошибка загрузки данных с сервера: ${error}`);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-        }
+     // получаем сохраненные фильмы при монтировании страницы
+        const [savedMovies, setSavedMovies] = React.useState([]);
     
         React.useEffect(() => {
-            setIsLoading(true);
-            getMoviesFromApi();
+            getSavedMovies(setSavedMovies);
         }, [])
 
-        const searchForMovies = (filterParam) => {
-            setIsLoading(true);
-            const filteredMovies = movies.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
-            setMovies(
-                filteredMovies.map((item) => ( item ))
-            );
-            if(filteredMovies.length === 0) {
-                setIsEmpty(true);
-            }
-            setIsLoading(false);
+    // фильтруем фильмы
+    const searchForMovies = (filterParam) => {
+        const filteredMovies = savedMovies.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
+        setSavedMovies(
+            filteredMovies.map((item) => ( item ))
+        );
+        if(filteredMovies.length === 0) {
+            setIsEmpty(true);
         }
+    }
 
-        //compering ids
-        const idsArrayWithSavedMovies = movies.map(item => item.movieId);
+    //compering ids
+    const idsArrayWithSavedMovies = savedMovies.map(item => item.movieId);
 
     return(
         <main>
@@ -96,14 +58,14 @@ export default function SavedMovies() {
                 {isLoading ? (
                     <Preloader />
                     ) : (
-                    isError ? (
+                    isServerError ? (
                         <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</h2>
                     ) : (
                         isEmpty ? (
                             <h2 className="movies__error">Ничего не найдено.</h2>
                             ) : (
                             <MoviesCardList
-                                movies = { movies }
+                                movies = { savedMovies }
                                 isShortOff = { isShortOff }
                                 handleRemoveMovie = { handleRemoveMovie }
                                 idsArrayWithSavedMovies = { idsArrayWithSavedMovies }
