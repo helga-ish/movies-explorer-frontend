@@ -19,6 +19,12 @@ export default function BurgerMenu() {
         setIsActive(false);
     }
 
+    function handleClick() {
+        if(isActive) {
+            handleInactiveState()
+        }
+    }
+
     const navigationToggleClassName = `burger-menu__toggler ${!isActive ? 'burger-menu__toggler_active' : ''}`;
     const burgerMenuClassName = `burger-menu__nav ${!isActive ? 'burger-menu__nav_inactive' : ''}`;
     const burgerMenuContainerClassName = `burger-menu__container ${isActive ? 'burger-menu__container_active' : ''}`;
@@ -30,13 +36,13 @@ export default function BurgerMenu() {
             <div className={ burgerMenuContainerClassName }>
                 <ul className={ burgerMenuClassName }>
                     <li><button type='button' className='burger-menu__cross' onClick={!isActive ? handleActiveState : handleInactiveState} /></li>
-                    <li><Link className={ headerMainLinkClassName } to="/" onClick={isActive ? handleInactiveState : '' }>Главная</Link></li>
-                    <li><Link className={ headerMoviesLinkClassName } to="/movies" onClick={isActive ? handleInactiveState : '' }>Фильмы</Link></li>
-                    <li><Link className={ headerSavedMoviesLinkClassName } to="/saved-movies" onClick={isActive ? handleInactiveState : '' }>Сохранённые фильмы</Link></li>
+                    <li><Link className={ headerMainLinkClassName } to="/" onClick={handleClick}>Главная</Link></li>
+                    <li><Link className={ headerMoviesLinkClassName } to="/movies" onClick={handleClick}>Фильмы</Link></li>
+                    <li><Link className={ headerSavedMoviesLinkClassName } to="/saved-movies" onClick={handleClick}>Сохранённые фильмы</Link></li>
                     <li>
-                        <Link className='burger-menu__link burger-menu__link-profile' to="/profile" onClick={isActive ? handleInactiveState : '' }>
+                        <Link className='burger-menu__link burger-menu__link-profile' to="/profile" onClick={handleClick}>
                             Аккаунт
-                            <button type='button' className='burger-menu__link-profile-button' onClick={isActive ? handleInactiveState : '' }>
+                            <button type='button' className='burger-menu__link-profile-button' onClick={handleClick}>
                                 <img className="burger-menu__link-profile-logo" src={profileLogo} alt="логотип профиля" />
                             </button>
                         </Link>

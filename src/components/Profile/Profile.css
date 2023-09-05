@@ -132,6 +132,17 @@
     visibility: visible;
 }
 
+.profile__form-button-success {
+    color: green;
+    text-align: center;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 20px;
+    align-self: center;
+}
+
 .profile__form-button_type_save-changes {
     background-color: #3456F3;
     border: none;

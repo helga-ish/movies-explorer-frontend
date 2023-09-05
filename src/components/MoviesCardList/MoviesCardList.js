@@ -2,7 +2,6 @@ import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
-import * as auth from '../../utils/MainApi';
 
 export default function MoviesCardList({
     shortMoviesFilteredAndSliced,
@@ -92,7 +91,5 @@ export default function MoviesCardList({
         </section>
     )
 };
-
-// переключатель короткометражек: нужно ли писать "не найдено" при отсутствии короткометражек?
 
 // настроить поиск по англ названиям тоже

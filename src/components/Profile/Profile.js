@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from "../../hooks/useForm";
 
-export default function Profile({ onUpdateUser, onSignOut, isError }) {
+export default function Profile({ onUpdateUser, onSignOut, isError, isSaveSuccess }) {
 
     const currentUser = React.useContext(CurrentUserContext);
+
 
     React.useEffect(() => {
         setUserName(currentUser.name);
@@ -53,20 +54,23 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
         );
 
     function handleSubmit(state) {
-        finishEditMode();
         return onUpdateUser({
             name: userName,
             email: userEmail,
-            });
-        }
+            })
+    }
+
+    const isAtLeastOneChanged = () => {
+        return userName !== currentUser.name || userEmail !== currentUser.email;
+        };
 
     return(
         <main>
             <section className='profile' id='profile'>
                 <form className="form profile__form" name='profileForm'>
-                    <h1 className="form__heading profile__form-heading">{`Привет, ${ userName }!`}</h1>
+                    <h1 className="form__heading profile__form-heading">{`Привет, ${userName}!`}</h1>
                     <fieldset className="form__fields profile__form-fields">
-                        <label className="form__label profile__form-label" for='name'>Имя</label>
+                        <label className="form__label profile__form-label">Имя</label>
                         <input
                             type='text'
                             placeholder='Имя'
@@ -83,7 +87,7 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
                             value={ userName || '' }
                         />
 
-                        <label className="form__label profile__form-label" for='email'>E-mail</label>
+                        <label className="form__label profile__form-label">E-mail</label>
                         <input
                             type='email'
                             placeholder='E-mail'
@@ -105,11 +109,18 @@ export default function Profile({ onUpdateUser, onSignOut, isError }) {
                     <div className='profile__form-button-list'>
                         <button type="submit" className='profile__form-button' onClick={ goToEditMode }>Редактировать</button>
                         <Link className="profile__form-button" to="/"><button type="submit" className='signout-button' onClick={ onSignOut }>Выйти из аккаунта</button></Link>
+                        {isSaveSuccess && <span className='profile__form-button-success'>Данные профиля успешно обновлены!</span>}
                     </div>
                     ) : (
                         <div className='profile__form-button-list_edit'>
                             <span className={`profile__form-button-error ${isError ? 'profile__form-button-error_active' : ''}`}>При обновлении профиля произошла ошибка.</span>
-                            <button type="submit" className='profile__form-button profile__form-button_type_save-changes' onClick={ handleOnSubmit } disabled = { disable }>Сохранить</button>
+                            <button
+                            type="submit"
+                            className='profile__form-button profile__form-button_type_save-changes'
+                            onClick={handleOnSubmit}
+                            disabled = { disable || !isAtLeastOneChanged()}>
+                                Сохранить
+                            </button>
                         </div>
                         )
                     }

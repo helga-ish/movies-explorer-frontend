@@ -15,12 +15,12 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
     }, [])
 
     const stateSchema = {
-        query: { value: '', error: ''}, // removed searchTerm from value
+        query: { value: '', error: ''},
     };
 
     const validationStateSchema = {
         query: {
-          required: true,
+        //   required: true,
           validator: {
             regEx: /^[a-zA-Zа-яА-я- ]{2,30}$/,
             error: 'Нужно ввести ключевое слово.',
@@ -110,6 +110,6 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
             </form>
         </section>
     )
-};
+}
 
 // при обновлении и подставлении searchTerm в поисковую строку кнопка Найти не разблокируется, пока не начнешь печатать что-то в поле

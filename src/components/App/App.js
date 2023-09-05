@@ -13,12 +13,12 @@ import Error404 from '../Error404/Error404';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import * as mainApi from '../../utils/MainApi';
 import ProtectedRoute from '../../utils/protectRoute';
-import * as movieApi from '../../utils/MoviesApi';
+// import * as movieApi from '../../utils/MoviesApi';
 
 
 function App() {
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
 
   // loggedIn стейт
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -28,9 +28,13 @@ function App() {
   }
   
   // проверка token
-
   React.useEffect(() => {
-    checkToken();
+    if (localStorage.getItem('token')) {
+        handleLogin();
+        navigate(location.pathname, {replace: true})
+    } else {
+      navigate('/signin', { replace: true})
+    }
   }, [])
 
   const checkToken = () => {
@@ -41,7 +45,7 @@ function App() {
             handleLogin();
             navigate('/movies', {replace: true})
         })
-        .catch((error) => {
+        .catch(() => {
           console.error('При авторизации произошла ошибка.')
         });
       }
@@ -61,7 +65,8 @@ function App() {
   }, [loggedIn]);
 
   // update информации о пользователе на странице профиля
-
+  const [isSaveSuccess, setIsSaveSuccess] = React.useState(false);
+  const successMessageDuration = 3000;
   const [isError, setIsError] = React.useState(false);
   function handleIsError() {
       setIsError(true);
@@ -75,9 +80,14 @@ function App() {
     .then((newUserData) => {
         handleIsNoError();
         setCurrentUser(newUserData.data)
+        setIsSaveSuccess(true);
+        setTimeout(() => {
+          setIsSaveSuccess(false);
+      }, successMessageDuration);
     })
     .catch((error) => {
         handleIsError();
+        setIsSaveSuccess(false);
         console.error(`Ошибка загрузки данных пользователя с сервера: ${error}`);
     })
   }
@@ -124,50 +134,11 @@ function App() {
     });
   }
 
-  // загрузка найденных фильмов с апи фильмов для /movies
-  const fetchAllMovies = (filterParam) => {
-    movieApi.getAllMovies()
-    .then((data) => {
-      setIsLoading(true)
-      setIsError(false);
-      const filteredData = data.filter((item) => item.nameRU.toLowerCase().includes(filterParam.toLowerCase()));
-      localStorage.setItem(('searchResults'), JSON.stringify(
-              filteredData.map((item) => ({
-                  country: item.country,
-                  director: item.director,
-                  duration: item.duration,
-                  year: item.year,
-                  description: item.description,
-                  image: item.image,
-                  trailerLink: item.trailerLink,
-                  nameRU: item.nameRU,
-                  nameEN: item.nameEN,
-                  thumbnail: item.thumbnail,
-                  movieId: item.id,
-              }))
-      ))
-      if(filteredData.length === 0) {
-          setIsEmpty(true);
-      }
-      localStorage.setItem('searchWord', filterParam);
-    })
-    .catch((error) => {
-        setIsError(true);
-        console.log(`Ошибка загрузки данных с сервера: ${error}`);
-    })
-    .finally(() => {
-        setIsLoading(false);
-    })
-  }
-
   // прелоадер
   const [isLoading, setIsLoading] = React.useState(false);
 
   // ошибка при загрузке фильмов
   const [isServerError, setIsServerError] = React.useState(false);
-
-  // стейт для пустого результата поиска
-  const [isEmpty, setIsEmpty] = React.useState(false);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -187,16 +158,14 @@ function App() {
               onUpdateUser = { handleUpdateUser }
               onSignOut = { handleSignOut }
               isError = { isError }
+              isSaveSuccess = { isSaveSuccess }
               />
             } />
 
             <Route path='/movies' element={
               <Movies
               getSavedMovies = { getSavedMovies }
-              fetchAllMovies = { fetchAllMovies }
-              isLoading = { isLoading }
-              isServerError = { isServerError }
-              isEmpty = { isEmpty }
+              
               />
             } />
 

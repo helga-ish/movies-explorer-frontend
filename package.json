@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.22.9"
+    "@babel/core": "^7.22.9",
+    "eslint": "^8.48.0"
   }
 }

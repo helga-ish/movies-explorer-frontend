@@ -35,7 +35,7 @@ export default function Form({
                     <h1 className="form__heading">{`${title}`}</h1>
                     <fieldset className="form__fields">
                         {children}
-                        <label className="form__label" for='email'>E-mail</label>
+                        <label className="form__label">E-mail</label>
                         <input
                             type='email'
                             className={`form__field form__field_type_email ${ stateEmailError ? 'form__field_type_error' : ''}`} 
@@ -50,7 +50,7 @@ export default function Form({
 
                         <span className={`form__field-error email-input-error ${ stateEmailError ? 'form__field-error_active' : ''}`}>{ stateEmailError }</span>
 
-                        <label className="form__label" for='password'>Пароль</label>
+                        <label className="form__label">Пароль</label>
                         <input
                             type='password'
                             className={`form__field form__field_type_password ${ statePasswordError ? 'form__field_type_error' : ''}`} 
