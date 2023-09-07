@@ -3,12 +3,9 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = ({ loggedIn }) => {
   if (!loggedIn) {
-    return <Navigate to="/signin" replace />;
+    return <Navigate to="/" replace />;
   }
-  return <Outlet
-  //  to={location.pathname} 
-  //  replace
-   />;
+  return <Outlet />;
 };
 
   export default ProtectedRoute;

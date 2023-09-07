@@ -7,62 +7,28 @@ import Preloader from '../Preloader/Preloader';
 
 export default function SavedMovies({ 
     getSavedMovies,
+    savedMovies,
     isLoading,
-    isServerError
+    isServerError,
+    handleRemoveMovie,
+    filterSavedMovies,
+    isEmpty,
+    isMovieSaved,
+    updateFoundMovies
     }) {
 
     // short movies filter
     const [isShortOff, setIsShortOff] = React.useState(false);
 
-    // стейт для пустого результата поиска
-    const [isEmpty, setIsEmpty] = React.useState(false);
-
-    // remove
-    function handleRemoveMovie(movie) {
-        console.log(movie);
-        mainApi.deleteMovie(movie.movieId)
-        .then(() => {
-            setSavedMovies((state) => state.filter(function(m) {
-                return m.movieId !== movie.movieId;
-            }))
-        })
-        .catch((error) => {
-            console.error(`Ошибка загрузки данных с сервера: ${error}`);
-        });
-    }
-    
-     // получаем сохраненные фильмы при монтировании страницы
-    const [savedMovies, setSavedMovies] = React.useState([]);
-
     React.useEffect(() => {
-        getSavedMovies(setSavedMovies);
+        getSavedMovies();
     }, [])
-
-    // фильтруем фильмы
-    const searchForMovies = (filterParam) => {
-        const filteredMovies = savedMovies.filter((item) => {
-            const nameRU = item.nameRU.toLowerCase();
-            const nameEN = item.nameEN.toLowerCase();
-            const filter = filterParam.toLowerCase();
-
-            return nameRU.includes(filter) || nameEN.includes(filter);              
-        });
-        setSavedMovies(
-            filteredMovies.map((item) => ( item ))
-        );
-        if(filteredMovies.length === 0) {
-            setIsEmpty(true);
-        }
-    }
-
-    //compering ids
-    const idsArrayWithSavedMovies = savedMovies.map(item => item.movieId);
 
     return(
         <main>
             <section className="saved-movies">
                 <SearchForm
-                    searchForMovies = { searchForMovies }
+                    filterSavedMovies = { filterSavedMovies }
                     setIsShortOff = { setIsShortOff }
                 />
                 {isLoading ? (
@@ -78,7 +44,6 @@ export default function SavedMovies({
                                 movies = { savedMovies }
                                 isShortOff = { isShortOff }
                                 handleRemoveMovie = { handleRemoveMovie }
-                                idsArrayWithSavedMovies = { idsArrayWithSavedMovies }
                             />
                             )
                         )

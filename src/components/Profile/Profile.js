@@ -54,6 +54,9 @@ export default function Profile({ onUpdateUser, onSignOut, isError, isSaveSucces
         );
 
     function handleSubmit(state) {
+        if(isSaveSuccess) {
+            finishEditMode()
+        };
         return onUpdateUser({
             name: userName,
             email: userEmail,

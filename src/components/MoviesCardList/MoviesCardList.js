@@ -4,8 +4,6 @@ import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
 
 export default function MoviesCardList({
-    shortMoviesFilteredAndSliced,
-    moviesSliced,
     foundMovies,
     isShortOff,
     handleSaveMovie,
@@ -13,11 +11,12 @@ export default function MoviesCardList({
     visibleCardCount,
     handleClick,
     movies,
+    moviesSliced,
+    shortMoviesFilteredAndSliced,
+    savedMovies
     }) {
     
     const location = useLocation();
-
-
 
     return(
         <section className="moviesCardList">
@@ -26,7 +25,7 @@ export default function MoviesCardList({
                 <ul className="moviesCardList__gallery">
                     {shortMoviesFilteredAndSliced.map((item) => (
                         <MoviesCard
-                        key = { item.id }
+                        key = { item.movieId }
                         movie = { item }
                         handleSaveMovie = { handleSaveMovie }
                         handleRemoveMovie = { handleRemoveMovie }
@@ -39,7 +38,7 @@ export default function MoviesCardList({
                 {
                     moviesSliced.map((item) => (
                         <MoviesCard
-                        key = { item.id }
+                        key = { item.movieId }
                         movie = { item }
                         handleSaveMovie = { handleSaveMovie }
                         handleRemoveMovie = { handleRemoveMovie }
@@ -53,7 +52,7 @@ export default function MoviesCardList({
                             {
                             movies.filter((item) => item.duration >= 40).map((item) => (
                                 <MoviesCard
-                                key = { item.id }
+                                key = { item.movieId }
                                 movie = { item }
                                 handleSaveMovie = { handleSaveMovie }
                                 handleRemoveMovie = { handleRemoveMovie }
@@ -66,7 +65,7 @@ export default function MoviesCardList({
                         {
                             movies.map((item) => (
                                 <MoviesCard
-                                key = { item.id }
+                                key = { item.movieId }
                                 movie = { item }
                                 handleSaveMovie = { handleSaveMovie }
                                 handleRemoveMovie = { handleRemoveMovie }

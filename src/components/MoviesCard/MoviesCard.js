@@ -4,12 +4,11 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 import { useLocation } from 'react-router-dom';
 
-export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) { 
+export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
 
     const location = useLocation();
     const currentUser = React.useContext(CurrentUserContext);
     const isOwn = movie.owner === currentUser._id;
-    const isSaved = movie.isSaved === true;
 
     // нажатие на кнопку "сохранить", сохранение фильма в нашу БД, затем удаление из нее:
 
@@ -48,7 +47,7 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
       }
 
       const cardSaveButtonClassName = ( 
-        `moviesCard__button ${isSaved && 'moviesCard__button_type_saved'}` 
+        `moviesCard__button ${movie.isSaved ? 'moviesCard__button_type_saved' : 'moviesCard__button_type_notsaved'}` 
       );
 
     return(
@@ -77,7 +76,7 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
                     ) : (
                         showSaveButton && 
                         <button
-                        className ={`moviesCard__button moviesCard__button_type_notsaved `}
+                        className ={ cardSaveButtonClassName }
                         type = "button"
                         onClick = { handleSaving }
                         >
@@ -85,11 +84,11 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
                         </button>
                     )
                 )}
-                {location.pathname === '/saved-movies' && isOwn && <button
+                {/* {location.pathname === '/saved-movies' && isOwn && <button
                 className="moviesCard__button moviesCard__button_type_remove"
                 type="button"
                 onClick = { handleRemoving }
-                />}
+                />} */}
             </div>
             
             <div className="moviesCard__container">

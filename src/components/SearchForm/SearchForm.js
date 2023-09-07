@@ -6,7 +6,7 @@ import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
 import useForm from "../../hooks/useForm";
 import { useLocation } from "react-router-dom";
 
-export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm, searchForMovies }) {
+export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm, filterSavedMovies }) {
 
     const location = useLocation();
 
@@ -42,7 +42,7 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
         if(location.pathname === '/movies') {
             findMovies(searchTerm);
         } else if(location.pathname === '/saved-movies') {
-            searchForMovies(state.query.value)
+            filterSavedMovies(state.query.value)
         }
     }
 
