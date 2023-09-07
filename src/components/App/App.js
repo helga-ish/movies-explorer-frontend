@@ -227,16 +227,16 @@ function App() {
     mainApi.deleteMovie(movie.movieId)
     .then(() => {
       setSavedMovies((state) => state.filter((m) => m.movieId !== movie.movieId));
-    //   setFoundMovies((state) => state.map((movieInState) => {
-    //     if(movieInState.movieId === movie.movieId) {
-    //       const { isSaved, ...rest} = movieInState;
-    //       return rest;
-    //     }
-    //     return movieInState;
-    // })
-    // );
-    // console.log('Успешно удалено.');
-    // localStorage.setItem('searchResults', JSON.stringify(foundMovies));
+      const updatedFoundMovies = foundMovies.map((movieInState) => {
+        if(movieInState.movieId === movie.movieId) {
+          const { isSaved, ...rest} = movieInState;
+          return rest;
+        }
+        return movieInState;
+      });
+      console.log('Успешно удалено.');
+      localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
+      setFoundMovies(updatedFoundMovies);
     })
     .catch((error) => {
         console.error(`Ошибка загрузки данных с сервера: ${error}`);
