@@ -7,14 +7,14 @@ function checkResponse(res) {
   return Promise.reject('Произошла ошибка.');
 }
 
-export const register = (email, password, name) => {
+export const register = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     credentials: 'include',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({email, password, name})
+    body: JSON.stringify({name, email, password})
   })
   .then((res) => {
     return checkResponse(res);

@@ -64,34 +64,6 @@ function App() {
     })
   }, [loggedIn]);
 
-  // update информации о пользователе на странице профиля
-  const [isSaveSuccess, setIsSaveSuccess] = React.useState(false);
-  const successMessageDuration = 3000;
-  const [isError, setIsError] = React.useState(false);
-  function handleIsError() {
-      setIsError(true);
-  }
-  function handleIsNoError() {
-      setIsError(false);
-  }
-
-  function handleUpdateUser(object) {
-    mainApi.changeProfileUserInfo(object)
-    .then((newUserData) => {
-        handleIsNoError();
-        setCurrentUser(newUserData.data)
-        setIsSaveSuccess(true);
-        setTimeout(() => {
-          setIsSaveSuccess(false);
-      }, successMessageDuration);
-    })
-    .catch((error) => {
-        handleIsError();
-        setIsSaveSuccess(false);
-        console.error(`Ошибка загрузки данных пользователя с сервера: ${error}`);
-    })
-  }
-
   // signout на странице профиля
   function handleSignOut() {
       localStorage.removeItem('token');
@@ -199,14 +171,14 @@ function App() {
   }
 
   // достаем searchResult из localStorage, сравниваем array, чтобы раскидать значки save
-  function updateFoundMovies() {
-    const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
-      if(savedSearchMovies.length !== 0) {
-        const result = compareArrays(savedSearchMovies, savedMovies);
-        setFoundMovies(result);
-        localStorage.setItem(('searchResults'), JSON.stringify(result));
-      };
-  }
+  // function updateFoundMovies() {
+  //   const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
+  //     if(savedSearchMovies.length !== 0) {
+  //       const result = compareArrays(savedSearchMovies, savedMovies);
+  //       setFoundMovies(result);
+  //       localStorage.setItem(('searchResults'), JSON.stringify(result));
+  //     };
+  // }
 
   // сравниваем два массива и добавляем параметр сохранения
   function compareArrays(array1, array2) {
@@ -294,10 +266,8 @@ function App() {
           <Route element={<ProtectedRoute loggedIn={loggedIn} />}>
             <Route path='/profile' element={
               <Profile
-              onUpdateUser = { handleUpdateUser }
+              setCurrentUser = { setCurrentUser }
               onSignOut = { handleSignOut }
-              isError = { isError }
-              isSaveSuccess = { isSaveSuccess }
               />
             } />
 
@@ -312,7 +282,6 @@ function App() {
               fetchAllMovies = { fetchAllMovies }
               handleSaveMovie = { handleSaveMovie }
               savedMovies={ savedMovies }
-              // updateFoundMovies={ updateFoundMovies }
               />
             } />
 

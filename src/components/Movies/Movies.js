@@ -2,20 +2,16 @@ import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import './Movies.css';
-import * as movieApi from '../../utils/MoviesApi';
 import Preloader from '../Preloader/Preloader';
-import * as mainApi from '../../utils/MainApi';
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useOrientationChange } from "../../hooks/useOrientationChange";
 
 export default function Movies({
-    getSavedMovies,
     foundMovies,
     isLoading,
     isServerError,
     isEmpty,
     fetchAllMovies,
-    updateFoundMovies,
     handleSaveMovie,
     savedMovies,
     setFoundMovies
@@ -67,8 +63,6 @@ export default function Movies({
     const [visibleCardCount, setVisibleCardCount] = React.useState(
       initialCardCount
     );
-
-    // Math.floor(visibleCardCount / cardColumnCount) * cardColumnCount; //можно не округлять, потому что иначе по пять карточек на мобилке не получается
 
     const handleClick = () => {
         calculateCardCount();

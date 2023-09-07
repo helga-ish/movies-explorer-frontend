@@ -53,14 +53,6 @@ export default function Login({ checkToken, handleLogin }) {
           .catch((err) => {
             console.log(err);
             handleIsError();
-            // if (err.status === 500) {
-            //     errMessage = 'На сервере произошла ошибка.'
-            // } else if (err.status === 404) {
-            //     errMessage = 'Страница по указанному маршруту не найдена.'
-            // } else if (err.status === 401) {
-            //     errMessage = 'Вы ввели неправильный email или пароль.';
-            // }
-            // console.error(errMessage);
           });
       }
 

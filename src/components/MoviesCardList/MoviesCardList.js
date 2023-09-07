@@ -13,7 +13,6 @@ export default function MoviesCardList({
     movies,
     moviesSliced,
     shortMoviesFilteredAndSliced,
-    savedMovies
     }) {
     
     const location = useLocation();
@@ -90,5 +89,3 @@ export default function MoviesCardList({
         </section>
     )
 };
-
-// настроить поиск по англ названиям тоже

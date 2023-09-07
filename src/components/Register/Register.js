@@ -8,6 +8,7 @@ import useForm from "../../hooks/useForm";
 export default function Register() {
 
     const navigate = useNavigate();
+    const [isError, setIsError] = React.useState(false);
 
     const stateSchema = {
         name: { value: '', error: ''},
@@ -41,13 +42,14 @@ export default function Register() {
       };
 
       const handleSubmit = (state) => {
-        mainApi.register(state)
-          .then((data) => {
-            if(data.token) {
-              navigate("/movies", {replace: true})
-            }
+        setIsError(false);
+        console.log(state);
+        mainApi.register(state.name.value, state.email.value, state.password.value)
+          .then(() => {
+              navigate("/movies", {replace: true});
           })
           .catch((err) => {
+            setIsError(true);
             console.log(err);
           });
       }
@@ -58,6 +60,7 @@ export default function Register() {
         handleSubmit
       );
 
+      const errorButtonState = `${isError ? 'form__field-error_active' : ''}`;
 
     return(
         <main>
@@ -75,6 +78,7 @@ export default function Register() {
                 disable = { disable }
                 stateEmailError = { state.email.error }
                 statePasswordError = {state.password.error }
+                errorButtonState = { errorButtonState }
                 >
                     <label className="form__label" for='name'>Имя</label>
                     <input

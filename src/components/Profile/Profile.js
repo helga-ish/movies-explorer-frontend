@@ -4,8 +4,9 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from "../../hooks/useForm";
+import * as mainApi from '../../utils/MainApi';
 
-export default function Profile({ onUpdateUser, onSignOut, isError, isSaveSuccess }) {
+export default function Profile({ setCurrentUser, onSignOut }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
@@ -53,11 +54,37 @@ export default function Profile({ onUpdateUser, onSignOut, isError, isSaveSucces
         handleSubmit
         );
 
+    // update информации о пользователе на странице профиля
+    const [isSaveSuccess, setIsSaveSuccess] = React.useState(false);
+    const successMessageDuration = 3000;
+    const [isError, setIsError] = React.useState(false);
+    function handleIsError() {
+        setIsError(true);
+    }
+    function handleIsNoError() {
+        setIsError(false);
+    }
+
+    function handleUpdateUser(object) {
+        mainApi.changeProfileUserInfo(object)
+        .then((newUserData) => {
+            handleIsNoError();
+            setCurrentUser(newUserData.data);
+            finishEditMode();
+            setIsSaveSuccess(true);
+            setTimeout(() => {
+            setIsSaveSuccess(false);
+        }, successMessageDuration);
+        })
+        .catch((error) => {
+            handleIsError();
+            setIsSaveSuccess(false);
+            console.error(`Ошибка загрузки данных пользователя с сервера: ${error}`);
+        })
+    }
+
     function handleSubmit(state) {
-        if(isSaveSuccess) {
-            finishEditMode()
-        };
-        return onUpdateUser({
+        handleUpdateUser({
             name: userName,
             email: userEmail,
             })
@@ -120,7 +147,7 @@ export default function Profile({ onUpdateUser, onSignOut, isError, isSaveSucces
                             <button
                             type="submit"
                             className='profile__form-button profile__form-button_type_save-changes'
-                            onClick={handleOnSubmit}
+                            onClick={ handleOnSubmit }
                             disabled = { disable || !isAtLeastOneChanged()}>
                                 Сохранить
                             </button>

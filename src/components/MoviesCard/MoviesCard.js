@@ -84,11 +84,6 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
                         </button>
                     )
                 )}
-                {/* {location.pathname === '/saved-movies' && isOwn && <button
-                className="moviesCard__button moviesCard__button_type_remove"
-                type="button"
-                onClick = { handleRemoving }
-                />} */}
             </div>
             
             <div className="moviesCard__container">
@@ -98,7 +93,3 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
         </li>
     )
 };
-
-// При клике на иконку «Лайк» в блоке карточки выполняется запрос к /movies нашего API для установки или снятия лайка,
-// в зависимости от текущего состояния.
-// мб переделать немного логику по аналогии с лайком карточки прошлой работы?
