@@ -33,7 +33,7 @@ function App() {
         handleLogin();
         navigate(location.pathname, {replace: true})
     } else {
-      navigate('/signin', { replace: true})
+      navigate('/', { replace: true})
     }
   }, [])
 
