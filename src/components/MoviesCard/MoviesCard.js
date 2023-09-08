@@ -32,7 +32,7 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
 
     // переход на трейлер по клику на картинку:
     const handleRedirectionClick = () => {
-        window.location.href = movie.trailerLink;
+        window.open(movie.trailerLink, '_blank');
     };
 
     // смена формата длины фильма:
