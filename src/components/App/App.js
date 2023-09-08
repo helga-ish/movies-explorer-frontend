@@ -12,7 +12,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Error404 from '../Error404/Error404';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import * as mainApi from '../../utils/MainApi';
-import ProtectedRoute from '../../utils/protectRoute';
+import ProtectedRoute from '../../utils/ProtectedRoute';
 import * as movieApi from '../../utils/MoviesApi';
 
 
@@ -169,16 +169,6 @@ function App() {
         setIsLoading(false);
     })
   }
-
-  // достаем searchResult из localStorage, сравниваем array, чтобы раскидать значки save
-  // function updateFoundMovies() {
-  //   const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
-  //     if(savedSearchMovies.length !== 0) {
-  //       const result = compareArrays(savedSearchMovies, savedMovies);
-  //       setFoundMovies(result);
-  //       localStorage.setItem(('searchResults'), JSON.stringify(result));
-  //     };
-  // }
 
   // сравниваем два массива и добавляем параметр сохранения
   function compareArrays(array1, array2) {

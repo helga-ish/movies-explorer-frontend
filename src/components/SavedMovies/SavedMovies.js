@@ -2,7 +2,6 @@ import React from "react";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import './SavedMovies.css';
-import * as mainApi from '../../utils/MainApi';
 import Preloader from '../Preloader/Preloader';
 
 export default function SavedMovies({ 
@@ -13,8 +12,6 @@ export default function SavedMovies({
     handleRemoveMovie,
     filterSavedMovies,
     isEmpty,
-    isMovieSaved,
-    updateFoundMovies
     }) {
 
     // short movies filter

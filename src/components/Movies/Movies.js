@@ -4,7 +4,6 @@ import SearchForm from "../SearchForm/SearchForm";
 import './Movies.css';
 import Preloader from '../Preloader/Preloader';
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { useOrientationChange } from "../../hooks/useOrientationChange";
 
 export default function Movies({
     foundMovies,
@@ -34,8 +33,6 @@ export default function Movies({
         setIsShortOff(shortMoviesState);
     }, []);
 
-    
-
     // отображение нужного числа карточек и дозагрузка с "Еще"
     const LG_ROW_CARD_COUNT = 3;
     const MD_ROW_CARD_COUNT = 2;
@@ -47,12 +44,6 @@ export default function Movies({
 
     const isDesktop = useMediaQuery("(min-width: 920px)");
     const isTablet = useMediaQuery("(min-width: 530px)");
-  
-    // const cardColumnCount = isDesktop
-    //   ? LG_ROW_CARD_COUNT
-    //   : isTablet
-    //   ? MD_ROW_CARD_COUNT
-    //   : SM_ROW_CARD_COUNT;
   
     const initialCardCount = isDesktop
       ? LG_INITIAL_CARD_COUNT
@@ -67,10 +58,6 @@ export default function Movies({
     const handleClick = () => {
         calculateCardCount();
     };
-    
-    // useOrientationChange(() => {
-    //     calculateCardCount();
-    // });
     
     const calculateCardCount = () => {
     if (isDesktop) {

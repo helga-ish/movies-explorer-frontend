@@ -20,7 +20,6 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
 
     const validationStateSchema = {
         query: {
-        //   required: true,
           validator: {
             regEx: /^[a-zA-Zа-яА-я- ]{2,30}$/,
             error: 'Нужно ввести ключевое слово.',
