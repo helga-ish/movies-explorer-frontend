@@ -5,7 +5,7 @@ import * as mainApi from '../../utils/MainApi';
 import { useNavigate } from 'react-router-dom';
 import useForm from "../../hooks/useForm";
 
-export default function Register() {
+export default function Register({ handleLogin, checkToken }) {
 
     const navigate = useNavigate();
     const [isError, setIsError] = React.useState(false);
@@ -46,6 +46,17 @@ export default function Register() {
         console.log(state);
         mainApi.register(state.name.value, state.email.value, state.password.value)
           .then(() => {
+            mainApi.login(state.email.value, state.password.value)
+            .then((data) => {
+              if(data.token) {
+                handleLogin();
+                checkToken();
+                navigate("/movies", {replace: true})
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
               navigate("/movies", {replace: true});
           })
           .catch((err) => {

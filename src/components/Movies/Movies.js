@@ -20,7 +20,6 @@ export default function Movies({
     const [searchTerm, setSearchTerm] = React.useState('');
 
     React.useEffect(() => {
-        console.log('mounting');
         const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
         if(savedSearchMovies) {
             setFoundMovies(savedSearchMovies);

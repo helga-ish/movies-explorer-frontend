@@ -296,7 +296,10 @@ function App() {
           } />
 
           <Route path='/signup' element={
-            <Register />
+            <Register
+            checkToken = { checkToken }
+            handleLogin = { handleLogin }
+            />
           } />
 
           <Route path="/404" element={
