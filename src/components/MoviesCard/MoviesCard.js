@@ -65,7 +65,10 @@ export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }
                 onClick = { handleRedirectionClick }
                 />
                 {movie.isSaved ? (
-                    <button className={ cardSaveButtonClassName } type="button"/>
+                    <button className={ cardSaveButtonClassName }
+                    type="button"
+                    onClick = { handleRemoving }
+                    />
                 ) : (
                     location.pathname === '/saved-movies' && isOwn ? (
                         <button

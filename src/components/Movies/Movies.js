@@ -13,7 +13,8 @@ export default function Movies({
     fetchAllMovies,
     handleSaveMovie,
     savedMovies,
-    setFoundMovies
+    setFoundMovies,
+    handleRemoveMovie
     }) { 
 
     // загрузка данных из localStorage при монтировании страницы
@@ -107,6 +108,7 @@ export default function Movies({
                                     shortMoviesFilteredAndSliced = { shortMoviesFilteredAndSliced }
                                     moviesSliced = { moviesSliced }
                                     savedMovies = { savedMovies }
+                                    handleRemoveMovie = { handleRemoveMovie }
                                 />
                                 )
                             )

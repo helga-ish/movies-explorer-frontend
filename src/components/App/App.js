@@ -272,6 +272,7 @@ function App() {
               fetchAllMovies = { fetchAllMovies }
               handleSaveMovie = { handleSaveMovie }
               savedMovies={ savedMovies }
+              handleRemoveMovie = { handleRemoveMovie }
               />
             } />
 
