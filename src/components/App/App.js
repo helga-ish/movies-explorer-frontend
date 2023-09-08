@@ -290,16 +290,23 @@ function App() {
           </Route>
 
           <Route path='/signin' element={
-            <Login
-            checkToken = { checkToken }
-            handleLogin = { handleLogin }/>
+            !loggedIn ? (
+              <Login
+              checkToken = { checkToken }
+              handleLogin = { handleLogin }/>
+            ) : (
+              <Navigate to="/" replace />
+            )
           } />
 
           <Route path='/signup' element={
-            <Register
-            checkToken = { checkToken }
-            handleLogin = { handleLogin }
-            />
+            !loggedIn ? (
+              <Register
+              checkToken = { checkToken }
+              handleLogin = { handleLogin }/>
+            ) : (
+              <Navigate to="/" replace />
+            )
           } />
 
           <Route path="/404" element={
