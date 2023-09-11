@@ -9,7 +9,7 @@ import * as mainApi from '../../utils/MainApi';
 export default function SavedMovies({ 
     isLoading,
     savedMovies,
-    isServerError,
+    isServerErrorForMovies,
     handleRemoveMovie,
     isEmpty,
     setIsEmpty,
@@ -59,20 +59,20 @@ export default function SavedMovies({
                 {isLoading ? (
                     <Preloader />
                     ) : (
-                    isServerError ? (
-                        <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</h2>
-                    ) : (
-                        isEmpty ? (
-                            <h2 className="movies__error">Ничего не найдено.</h2>
-                            ) : (
-                            <MoviesCardList
-                                savedMovies = { savedMovies }
-                                searchedMovies = { searchedMovies }
-                                isShortOff = { isShortOff }
-                                handleRemoveMovie = { handleRemoveMovie }
-                            />
+                        isServerErrorForMovies ? (
+                            <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</h2>
+                        ) : (
+                            isEmpty ? (
+                                <h2 className="movies__error">Ничего не найдено.</h2>
+                                ) : (
+                                <MoviesCardList
+                                    savedMovies = { savedMovies }
+                                    searchedMovies = { searchedMovies }
+                                    isShortOff = { isShortOff }
+                                    handleRemoveMovie = { handleRemoveMovie }
+                                />
+                                )
                             )
-                        )
                     )
                 }
             </section>

@@ -9,12 +9,13 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 export default function Movies({
     foundMovies,
     isLoading,
-    isServerError,
+    isServerErrorForMovies,
     isEmpty,
     fetchAllMovies,
     handleSaveMovie,
     setFoundMovies,
     handleRemoveMovie,
+    setIsServerErrorForMovies
     }) { 
 
     // загрузка данных из localStorage при монтировании страницы
@@ -23,6 +24,7 @@ export default function Movies({
 
     React.useEffect(() => {
         console.log('useEffect on movies');
+        // setIsServerErrorForMovies(false);
         const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
         if(savedSearchMovies) {
             setFoundMovies(savedSearchMovies);
@@ -94,29 +96,23 @@ export default function Movies({
                     searchTerm = { searchTerm }
                     setSearchTerm = { setSearchTerm }
                 />
-                {isLoading ? (
-                    <Preloader />
-                    ) : (
-                        isServerError ? (
-                        <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз</h2>
-                        ) : (
-                            isEmpty ? (
-                                <h2 className="movies__error">Ничего не найдено.</h2>
-                                ) : (
-                                <MoviesCardList
-                                    foundMovies = { foundMovies }
-                                    isShortOff = { isShortOff }
-                                    handleSaveMovie = { handleSaveMovie }
-                                    visibleCardCount = { visibleCardCount }
-                                    handleClick = { handleClick }
-                                    shortMoviesFilteredAndSliced = { shortMoviesFilteredAndSliced }
-                                    moviesSliced = { moviesSliced }
-                                    handleRemoveMovie = { handleRemoveMovie }
-                                />
-                                )
+                {isLoading && <Preloader />}
+                {isServerErrorForMovies && <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</h2>}
+                    {isEmpty ? (
+                            <h2 className="movies__error">Ничего не найдено.</h2>
+                            ) : (
+                            <MoviesCardList
+                                foundMovies = { foundMovies }
+                                isShortOff = { isShortOff }
+                                handleSaveMovie = { handleSaveMovie }
+                                visibleCardCount = { visibleCardCount }
+                                handleClick = { handleClick }
+                                shortMoviesFilteredAndSliced = { shortMoviesFilteredAndSliced }
+                                moviesSliced = { moviesSliced }
+                                handleRemoveMovie = { handleRemoveMovie }
+                            />
                             )
-                        )
-                }
+                    }
             </section>
         </main>
     )

@@ -75,6 +75,7 @@ function App() {
       localStorage.removeItem('searchWord');
       localStorage.removeItem('toggleOff');
       localStorage.removeItem('shortOff');
+      setSavedMovies([]);
   }
 
   // стейт с найденными фильмами
@@ -88,6 +89,7 @@ function App() {
     mainApi.getSavedMovies()
     .then((items) => {
       setIsLoading(true);
+      setIsServerErrorForSavedMovies(false);
       if(currentUser._id) {
         const ownedMovies = items.data.filter((item) => item.owner === currentUser._id);
         setSavedMovies(
@@ -109,8 +111,8 @@ function App() {
         }
     })
     .catch((error) => {
-        setIsServerError(true);
-        console.error(`Ошибка загрузки данных с сервера: ${error}`);
+      setIsServerErrorForSavedMovies(true);
+      console.error(`Ошибка загрузки данных с сервера: ${error}`);
     })
     .finally(() => {
         setIsLoading(false);
@@ -126,7 +128,10 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   // ошибка при загрузке фильмов
-  const [isServerError, setIsServerError] = React.useState(false);
+  const [isServerErrorForMovies, setIsServerErrorForMovies] = React.useState(false);
+
+  //ошибка при загрузке сохраненных фильмов
+  const [isServerErrorForSavedMovies, setIsServerErrorForSavedMovies] = React.useState(false);
 
   // стейт для пустого результата поиска
   const [isEmpty, setIsEmpty] = React.useState(false);
@@ -137,7 +142,7 @@ function App() {
     .then((data) => {
         setIsEmpty(false);
         setIsLoading(true);
-        setIsServerError(false);
+        setIsServerErrorForMovies(false);
         const filteredData = data.filter((item) => {
             const nameRU = item.nameRU.toLowerCase();
             const nameEN = item.nameEN.toLowerCase();
@@ -172,7 +177,7 @@ function App() {
 
     })
     .catch((error) => {
-        setIsServerError(true);
+        setIsServerErrorForMovies(true);
         console.log(`Ошибка загрузки данных с сервера: ${error}`);
     })
     .finally(() => {
@@ -259,23 +264,25 @@ function App() {
               foundMovies = { foundMovies }
               setFoundMovies = { setFoundMovies }
               isLoading = { isLoading }
-              isServerError = { isServerError }
+              isServerErrorForMovies = { isServerErrorForMovies }
               isEmpty = { isEmpty }
               fetchAllMovies = { fetchAllMovies }
               handleSaveMovie = { handleSaveMovie }
               handleRemoveMovie = { handleRemoveMovie }
+              setIsServerErrorForMovies = { setIsServerErrorForMovies }
               />
             } />
 
             <Route path='/saved-movies' element={
               <SavedMovies
               isLoading = { isLoading }
-              isServerError = { isServerError }
+              isServerErrorForSavedMovies = { isServerErrorForSavedMovies }
               handleRemoveMovie = { handleRemoveMovie }
               isEmpty = { isEmpty }
               // setIsEmpty = { setIsEmpty }
               fetchSavedMovies = { fetchSavedMovies }
               savedMovies = { savedMovies }
+              setIsServerErrorForSavedMovies = { setIsServerErrorForSavedMovies }
               />
             } />
 
