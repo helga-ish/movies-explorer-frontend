@@ -55,13 +55,15 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
 
   React.useEffect(() => {
-    mainApi.getProfileUserInfo()
+    if(loggedIn) {
+      mainApi.getProfileUserInfo()
     .then((userData) => {
         setCurrentUser(userData.data);
     })
     .catch((error) => {
         console.error(`Ошибка загрузки данных пользователя с сервера: ${error}`);
     })
+    }
   }, [loggedIn]);
 
   // signout на странице профиля
@@ -81,27 +83,30 @@ function App() {
   // обращаемся к апи за сохраненками, чтобы потом сравнить два массива и найти сохраненные для отображения значка сохраненности
   const [savedMovies, setSavedMovies] = React.useState([]);
 
-  // получение сохраненных фильмов с апи
-  function getSavedMovies() {
+  // загрузка всех сохраненных с сервера
+  const fetchSavedMovies = () => {
     mainApi.getSavedMovies()
     .then((items) => {
       setIsLoading(true);
-      setSavedMovies(
-            items.data.map((item) => ({
-                owner: item.owner,
-                country: item.country,
-                director: item.director,
-                duration: item.duration,
-                year: item.year,
-                description: item.description,
-                image: item.image,
-                trailerLink: item.trailerLink,
-                nameRU: item.nameRU,
-                nameEN: item.nameEN,
-                thumbnail: item.thumbnail,
-                movieId: item.movieId,
-            }))
-        )
+      if(currentUser._id) {
+        const ownedMovies = items.data.filter((item) => item.owner === currentUser._id);
+        setSavedMovies(
+              ownedMovies.map((item) => ({
+                  owner: item.owner,
+                  country: item.country,
+                  director: item.director,
+                  duration: item.duration,
+                  year: item.year,
+                  description: item.description,
+                  image: item.image,
+                  trailerLink: item.trailerLink,
+                  nameRU: item.nameRU,
+                  nameEN: item.nameEN,
+                  thumbnail: item.thumbnail,
+                  movieId: item.movieId,
+              }))
+          )
+        }
     })
     .catch((error) => {
         setIsServerError(true);
@@ -110,11 +115,12 @@ function App() {
     .finally(() => {
         setIsLoading(false);
     });
-  }
+  };
 
-  React.useEffect(() => {
-    getSavedMovies();
-  }, [])
+    React.useEffect(() => {
+      console.log('load on app');
+      fetchSavedMovies()
+    }, []);
 
   // прелоадер
   const [isLoading, setIsLoading] = React.useState(false);
@@ -224,23 +230,6 @@ function App() {
     .catch((error) => console.error(`Ошибка загрузки данных с сервера: ${error}`));
   }
 
-  // фильтруем сохраненные  фильмы
-  const filterSavedMovies = (filterParam) => {
-    const filteredMovies = savedMovies.filter((item) => {
-        const nameRU = item.nameRU.toLowerCase();
-        const nameEN = item.nameEN.toLowerCase();
-        const filter = filterParam.toLowerCase();
-
-        return nameRU.includes(filter) || nameEN.includes(filter);              
-    });
-    setSavedMovies(
-        filteredMovies.map((item) => ( item ))
-    );
-    if(filteredMovies.length === 0) {
-        setIsEmpty(true);
-    }
-  }
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='page'>
@@ -263,7 +252,6 @@ function App() {
 
             <Route path='/movies' element={
               <Movies
-              getSavedMovies = { getSavedMovies }
               foundMovies = { foundMovies }
               setFoundMovies = { setFoundMovies }
               isLoading = { isLoading }
@@ -271,20 +259,19 @@ function App() {
               isEmpty = { isEmpty }
               fetchAllMovies = { fetchAllMovies }
               handleSaveMovie = { handleSaveMovie }
-              savedMovies={ savedMovies }
               handleRemoveMovie = { handleRemoveMovie }
               />
             } />
 
             <Route path='/saved-movies' element={
               <SavedMovies
-              getSavedMovies = { getSavedMovies }
               isLoading = { isLoading }
               isServerError = { isServerError }
               handleRemoveMovie = { handleRemoveMovie }
-              savedMovies = { savedMovies }
-              filterSavedMovies = { filterSavedMovies }
               isEmpty = { isEmpty }
+              // setIsEmpty = { setIsEmpty }
+              fetchSavedMovies = { fetchSavedMovies }
+              savedMovies = { savedMovies }
               />
             } />
 
