@@ -119,7 +119,7 @@ function App() {
 
     React.useEffect(() => {
       console.log('load on app');
-      fetchSavedMovies()
+      fetchSavedMovies();
     }, []);
 
   // прелоадер
@@ -160,12 +160,16 @@ function App() {
                     movieId: item.id,
                 }))
         ))
-        const result = compareArrays(JSON.parse(localStorage.getItem('searchResults')), savedMovies);
-        setFoundMovies(result);
-        localStorage.setItem('searchWord', filterParam);
-        if(result.length === 0) {
+        if(savedMovies.length !== 0) {
+          const result = compareArrays(JSON.parse(localStorage.getItem('searchResults')), savedMovies);
+          setFoundMovies(result);
+          localStorage.setItem(('searchResults'), JSON.stringify(result));
+          if(result.length === 0) {
             setIsEmpty(true);
+          }
         }
+        localStorage.setItem('searchWord', filterParam);
+
     })
     .catch((error) => {
         setIsServerError(true);
@@ -223,8 +227,8 @@ function App() {
         }
         return movieInState;
       });
-      localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
-      setFoundMovies(updatedFoundMovies);
+    localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
+    setFoundMovies(updatedFoundMovies);
     console.log('Успешно сохранено.');
     })
     .catch((error) => console.error(`Ошибка загрузки данных с сервера: ${error}`));

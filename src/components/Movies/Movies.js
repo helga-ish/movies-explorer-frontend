@@ -4,6 +4,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import './Movies.css';
 import Preloader from '../Preloader/Preloader';
 import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 
 export default function Movies({
     foundMovies,
@@ -12,18 +13,21 @@ export default function Movies({
     isEmpty,
     fetchAllMovies,
     handleSaveMovie,
-    savedMovies,
     setFoundMovies,
-    handleRemoveMovie
+    handleRemoveMovie,
     }) { 
 
     // загрузка данных из localStorage при монтировании страницы
     const [searchTerm, setSearchTerm] = React.useState('');
+    const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
+        console.log('useEffect on movies');
         const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
         if(savedSearchMovies) {
             setFoundMovies(savedSearchMovies);
+        } else {
+            setFoundMovies([]);
         }
         const savedSearchTerm = localStorage.getItem('searchWord');
         if (savedSearchTerm) {
@@ -31,7 +35,7 @@ export default function Movies({
         };
         const shortMoviesState = JSON.parse(localStorage.getItem('shortOff'));
         setIsShortOff(shortMoviesState);
-    }, []);
+    }, [currentUser._id]);
 
     // отображение нужного числа карточек и дозагрузка с "Еще"
     const LG_ROW_CARD_COUNT = 3;
@@ -107,7 +111,6 @@ export default function Movies({
                                     handleClick = { handleClick }
                                     shortMoviesFilteredAndSliced = { shortMoviesFilteredAndSliced }
                                     moviesSliced = { moviesSliced }
-                                    savedMovies = { savedMovies }
                                     handleRemoveMovie = { handleRemoveMovie }
                                 />
                                 )
