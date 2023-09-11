@@ -11,7 +11,9 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
     const location = useLocation();
 
     React.useEffect(() => {
-        setIsToggleOff(JSON.parse(localStorage.getItem('toggleOff')));
+        if(location.pathname === '/movies') {
+            setIsToggleOff(JSON.parse(localStorage.getItem('toggleOff')));
+        }
     }, [])
 
     const stateSchema = {
@@ -62,6 +64,16 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
     }
 
 
+    function handleToggleOffForSaved() {
+        setIsToggleOff(true);
+        setIsShortOff(true);
+    }
+
+    function handleToggleOnForSaved() {
+        setIsToggleOff(false);
+        setIsShortOff(false);
+    }
+
     return(
         <section className="search">
              <form className="searchForm" action="/search" method="get">
@@ -101,14 +113,21 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
                     onClick = { handleOnSubmit }
                     />
                 </fieldset>
-                <div className="searchForm__filter">
+                {location.pathname === '/movies' ? (
+                    <div className="searchForm__filter">
                     {!isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggle } onClick = { handleToggleOff }/>}
                     {isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggleOff } onClick = { handleToggleOn }/>}
                     <h2 className="searchForm__toggle-name">Короткометражки</h2>
                 </div>
+                ) : (
+                    <div className="searchForm__filter">
+                    {!isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggle } onClick = { handleToggleOffForSaved }/>}
+                    {isToggleOff && <img className="searchForm__toggle" alt='toggle' src={ searchFormToggleOff } onClick = { handleToggleOnForSaved }/>}
+                    <h2 className="searchForm__toggle-name">Короткометражки</h2>
+                </div>
+                )}
+                
             </form>
         </section>
     )
 }
-
-// при обновлении и подставлении searchTerm в поисковую строку кнопка Найти не разблокируется, пока не начнешь печатать что-то в поле
