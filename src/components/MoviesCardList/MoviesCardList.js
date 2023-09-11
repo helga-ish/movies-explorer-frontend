@@ -10,7 +10,7 @@ export default function MoviesCardList({
     handleRemoveMovie,
     visibleCardCount,
     handleClick,
-    movies,
+    savedMovies,
     moviesSliced,
     shortMoviesFilteredAndSliced,
     }) {
@@ -49,7 +49,7 @@ export default function MoviesCardList({
                 isShortOff ? (
                         <ul className="moviesCardList__gallery">
                             {
-                            movies.filter((item) => item.duration >= 40).map((item) => (
+                            savedMovies.filter((item) => item.duration >= 40).map((item) => (
                                 <MoviesCard
                                 key = { item.movieId }
                                 movie = { item }
@@ -62,7 +62,7 @@ export default function MoviesCardList({
                 ) : (
                     <ul className="moviesCardList__gallery">
                         {
-                            movies.map((item) => (
+                            savedMovies.map((item) => (
                                 <MoviesCard
                                 key = { item.movieId }
                                 movie = { item }
