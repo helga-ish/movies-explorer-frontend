@@ -13,6 +13,8 @@ export default function MoviesCardList({
     savedMovies,
     moviesSliced,
     shortMoviesFilteredAndSliced,
+    searchThroughSavedMovies,
+    searchedMovies
     }) {
     
     const location = useLocation();
@@ -48,8 +50,31 @@ export default function MoviesCardList({
             )) : (
                 isShortOff ? (
                         <ul className="moviesCardList__gallery">
-                            {
-                            savedMovies.filter((item) => item.duration >= 40).map((item) => (
+                            {searchThroughSavedMovies ? (
+                                searchedMovies.filter((item) => item.duration >= 40).map((item) => (
+                                    <MoviesCard
+                                    key = { item.movieId }
+                                    movie = { item }
+                                    handleSaveMovie = { handleSaveMovie }
+                                    handleRemoveMovie = { handleRemoveMovie }
+                                    />
+                                ))
+                            ) : (
+                                savedMovies.filter((item) => item.duration >= 40).map((item) => (
+                                    <MoviesCard
+                                    key = { item.movieId }
+                                    movie = { item }
+                                    handleSaveMovie = { handleSaveMovie }
+                                    handleRemoveMovie = { handleRemoveMovie }
+                                    />
+                                ))
+                            )
+                        }
+                        </ul>
+                ) : (
+                    <ul className="moviesCardList__gallery">
+                        {searchThroughSavedMovies ? (
+                            searchedMovies.map((item) => (
                                 <MoviesCard
                                 key = { item.movieId }
                                 movie = { item }
@@ -57,11 +82,7 @@ export default function MoviesCardList({
                                 handleRemoveMovie = { handleRemoveMovie }
                                 />
                             ))
-                        }
-                        </ul>
-                ) : (
-                    <ul className="moviesCardList__gallery">
-                        {
+                        ) : (
                             savedMovies.map((item) => (
                                 <MoviesCard
                                 key = { item.movieId }
@@ -69,8 +90,8 @@ export default function MoviesCardList({
                                 handleSaveMovie = { handleSaveMovie }
                                 handleRemoveMovie = { handleRemoveMovie }
                                 />
-                            )
-                            )
+                            ))
+                        )
                         }
                     </ul>
                     )

@@ -4,7 +4,6 @@ import SearchForm from "../SearchForm/SearchForm";
 import './SavedMovies.css';
 import Preloader from '../Preloader/Preloader';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
-import * as mainApi from '../../utils/MainApi';
 
 export default function SavedMovies({ 
     isLoading,
@@ -23,16 +22,19 @@ export default function SavedMovies({
 
     React.useEffect(() => {
         console.log('load on saved-movies');
+        setSearchThroughSavedMovies(false);
         fetchSavedMovies();
     }, [currentUser._id]);
     
 
     // найденные фильмы
-    const [searchedMovies, setSearchedMovies] = React.useState([]);
+    const [searchedMovies, setSearchedMovies] = React.useState(savedMovies);
+    const [searchThroughSavedMovies, setSearchThroughSavedMovies] = React.useState(false);
 
     // фильтруем сохраненные  фильмы
     const filterSavedMovies = (filterParam) => {
-        console.log('search');
+        setSearchThroughSavedMovies(true);
+        setIsEmpty(false);
         const filteredMovies = savedMovies.filter((item) => {
             const nameRU = item.nameRU.toLowerCase();
             const nameEN = item.nameEN.toLowerCase();
@@ -41,9 +43,8 @@ export default function SavedMovies({
             return nameRU.includes(filter) || nameEN.includes(filter);              
         });
         setSearchedMovies(
-            filteredMovies.map((item) => ({item}))
+            filteredMovies
         );
-        console.log(searchedMovies);
         if(filteredMovies.length === 0) {
             setIsEmpty(true);
         }
@@ -70,6 +71,7 @@ export default function SavedMovies({
                                     searchedMovies = { searchedMovies }
                                     isShortOff = { isShortOff }
                                     handleRemoveMovie = { handleRemoveMovie }
+                                    searchThroughSavedMovies = { searchThroughSavedMovies }
                                 />
                                 )
                             )
