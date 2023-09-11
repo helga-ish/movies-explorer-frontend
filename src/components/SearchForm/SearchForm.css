@@ -109,7 +109,7 @@
     margin-right: 30px;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1000px) {
     .search {
         height: 261px;
         margin-left: 30px;
