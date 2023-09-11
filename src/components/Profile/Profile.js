@@ -42,7 +42,7 @@ export default function Profile({ setCurrentUser, onSignOut }) {
 
         email: {
             validator: {
-            regEx: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
+            regEx: /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
             error: 'Что-то пошло не так...',
             },
         },
