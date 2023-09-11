@@ -206,7 +206,8 @@ function App() {
     mainApi.deleteMovie(movie.movieId)
     .then(() => {
       setSavedMovies((state) => state.filter((m) => m.movieId !== movie.movieId));
-      const updatedFoundMovies = foundMovies.map((movieInState) => {
+      const localStorageMovies = JSON.parse(localStorage.getItem('searchResults'));
+      const updatedFoundMovies = localStorageMovies.map((movieInState) => {
         if(movieInState.movieId === movie.movieId) {
           const { isSaved, ...rest} = movieInState;
           return rest;
@@ -214,6 +215,7 @@ function App() {
         return movieInState;
       });
       console.log('Успешно удалено.');
+      console.log(updatedFoundMovies);
       localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
       setFoundMovies(updatedFoundMovies);
     })
@@ -234,9 +236,9 @@ function App() {
         }
         return movieInState;
       });
-    localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
-    setFoundMovies(updatedFoundMovies);
-    console.log('Успешно сохранено.');
+      localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
+      setFoundMovies(updatedFoundMovies);
+      console.log('Успешно сохранено.');
     })
     .catch((error) => console.error(`Ошибка загрузки данных с сервера: ${error}`));
   }
@@ -281,7 +283,7 @@ function App() {
               isServerErrorForSavedMovies = { isServerErrorForSavedMovies }
               handleRemoveMovie = { handleRemoveMovie }
               isEmpty = { isEmpty }
-              // setIsEmpty = { setIsEmpty }
+              setIsEmpty = { setIsEmpty }
               fetchSavedMovies = { fetchSavedMovies }
               savedMovies = { savedMovies }
               setIsServerErrorForSavedMovies = { setIsServerErrorForSavedMovies }
