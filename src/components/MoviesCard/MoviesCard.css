@@ -1,8 +1,7 @@
 .moviesCard {
     list-style: none;
     min-height: 201px;
-    width: 360px;
-    /* width: calc((100% - 200px) / 3); */
+    width: calc((100% - 200px) / 3);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -109,8 +108,8 @@
 
 @media screen and (max-width: 920px) {
     .moviesCard {
-        width: 339px;
-        /* width: calc((100% - 90px) / 2); */
+        /* width: 339px; */
+        width: calc((100% - 90px) / 2);
     }
 
     .moviesCard__image {
@@ -160,8 +159,7 @@
 
 @media screen and (max-width: 600px) {
     .moviesCard {
-        width: 300px;
-        /* width: calc((100% - 60px) / 2); */
+        width: calc((100% - 60px) / 2);
     }
 }
 
