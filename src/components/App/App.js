@@ -172,6 +172,8 @@ function App() {
           if(result.length === 0) {
             setIsEmpty(true);
           }
+        } else {
+          setFoundMovies(JSON.parse(localStorage.getItem('searchResults')));
         }
         localStorage.setItem('searchWord', filterParam);
 
