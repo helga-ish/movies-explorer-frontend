@@ -43,7 +43,6 @@ export default function Register({ handleLogin, checkToken }) {
 
       const handleSubmit = (state) => {
         setIsError(false);
-        console.log(state);
         mainApi.register(state.name.value, state.email.value, state.password.value)
           .then(() => {
             mainApi.login(state.email.value, state.password.value)
@@ -91,7 +90,7 @@ export default function Register({ handleLogin, checkToken }) {
                 statePasswordError = {state.password.error }
                 errorButtonState = { errorButtonState }
                 >
-                    <label className="form__label" for='name'>Имя</label>
+                    <label className="form__label">Имя</label>
                     <input
                         type = 'text'
                         className = {`form__field form__field_type_name ${ state.name.error ? 'form__field_type_error' : ''}`} 

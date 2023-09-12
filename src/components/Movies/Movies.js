@@ -15,7 +15,6 @@ export default function Movies({
     handleSaveMovie,
     setFoundMovies,
     handleRemoveMovie,
-    setIsServerErrorForMovies
     }) { 
 
     // загрузка данных из localStorage при монтировании страницы
@@ -23,8 +22,6 @@ export default function Movies({
     const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
-        console.log('useEffect on movies');
-        // setIsServerErrorForMovies(false);
         const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
         if(savedSearchMovies) {
             setFoundMovies(savedSearchMovies);
@@ -48,7 +45,7 @@ export default function Movies({
     const MD_INITIAL_CARD_COUNT = 8;
     const SM_INITIAL_CARD_COUNT = 5;
 
-    const isDesktop = useMediaQuery("(min-width: 920px)");
+    const isDesktop = useMediaQuery("(min-width: 1000px)");
     const isTablet = useMediaQuery("(min-width: 530px)");
   
     const initialCardCount = isDesktop
