@@ -120,7 +120,6 @@ function App() {
   };
 
     React.useEffect(() => {
-      console.log('load on app');
       fetchSavedMovies();
     }, []);
 
@@ -206,18 +205,19 @@ function App() {
     mainApi.deleteMovie(movie.movieId)
     .then(() => {
       setSavedMovies((state) => state.filter((m) => m.movieId !== movie.movieId));
-      const localStorageMovies = JSON.parse(localStorage.getItem('searchResults'));
-      const updatedFoundMovies = localStorageMovies.map((movieInState) => {
-        if(movieInState.movieId === movie.movieId) {
-          const { isSaved, ...rest} = movieInState;
-          return rest;
-        }
-        return movieInState;
-      });
+      if(JSON.parse(localStorage.getItem('searchResults'))) {
+        const localStorageMovies = JSON.parse(localStorage.getItem('searchResults'));
+        const updatedFoundMovies = localStorageMovies.map((movieInState) => {
+          if(movieInState.movieId === movie.movieId) {
+            const { isSaved, ...rest} = movieInState;
+            return rest;
+          }
+          return movieInState;
+        });
+        localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
+        setFoundMovies(updatedFoundMovies);
+      }
       console.log('Успешно удалено.');
-      console.log(updatedFoundMovies);
-      localStorage.setItem('searchResults', JSON.stringify(updatedFoundMovies));
-      setFoundMovies(updatedFoundMovies);
     })
     .catch((error) => {
         console.error(`Ошибка загрузки данных с сервера: ${error}`);
