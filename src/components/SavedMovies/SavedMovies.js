@@ -10,18 +10,18 @@ export default function SavedMovies({
     savedMovies,
     isServerErrorForMovies,
     handleRemoveMovie,
-    isEmpty,
-    setIsEmpty,
     fetchSavedMovies,
     }) {
 
     const currentUser = React.useContext(CurrentUserContext);
 
+    // стейт для пустого результата поиска
+    const [isSavedMoviesEmpty, setIsSavedMoviesEmpty] = React.useState(false);
+
     // short movies filter
     const [isShortOff, setIsShortOff] = React.useState(false);
 
     React.useEffect(() => {
-        console.log('load on saved-movies');
         setSearchThroughSavedMovies(false);
         fetchSavedMovies();
     }, [currentUser._id]);
@@ -34,7 +34,7 @@ export default function SavedMovies({
     // фильтруем сохраненные  фильмы
     const filterSavedMovies = (filterParam) => {
         setSearchThroughSavedMovies(true);
-        setIsEmpty(false);
+        setIsSavedMoviesEmpty(false);
         const filteredMovies = savedMovies.filter((item) => {
             const nameRU = item.nameRU.toLowerCase();
             const nameEN = item.nameEN.toLowerCase();
@@ -46,7 +46,7 @@ export default function SavedMovies({
             filteredMovies
         );
         if(filteredMovies.length === 0) {
-            setIsEmpty(true);
+            setIsSavedMoviesEmpty(true);
         }
     }
 
@@ -63,7 +63,7 @@ export default function SavedMovies({
                         isServerErrorForMovies ? (
                             <h2 className="movies__error">Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.</h2>
                         ) : (
-                            isEmpty ? (
+                            isSavedMoviesEmpty ? (
                                 <h2 className="movies__error">Ничего не найдено.</h2>
                                 ) : (
                                 <MoviesCardList

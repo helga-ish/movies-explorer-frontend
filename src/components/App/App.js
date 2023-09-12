@@ -282,8 +282,6 @@ function App() {
               isLoading = { isLoading }
               isServerErrorForSavedMovies = { isServerErrorForSavedMovies }
               handleRemoveMovie = { handleRemoveMovie }
-              isEmpty = { isEmpty }
-              setIsEmpty = { setIsEmpty }
               fetchSavedMovies = { fetchSavedMovies }
               savedMovies = { savedMovies }
               setIsServerErrorForSavedMovies = { setIsServerErrorForSavedMovies }
