@@ -12,6 +12,7 @@ export default function Movies({
     isServerErrorForMovies,
     isEmpty,
     fetchAllMovies,
+    fetchSavedMovies,
     handleSaveMovie,
     setFoundMovies,
     handleRemoveMovie,
@@ -22,6 +23,7 @@ export default function Movies({
     const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
+        fetchSavedMovies();
         const savedSearchMovies = JSON.parse(localStorage.getItem('searchResults'));
         if(savedSearchMovies) {
             setFoundMovies(savedSearchMovies);
