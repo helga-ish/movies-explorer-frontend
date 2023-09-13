@@ -53,6 +53,14 @@
     border-width: 0 0 1px;
 }
 
+.searchForm__error {
+    color:red;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
 
 .searchForm__field:focus {
     border-bottom: 1px solid #2BE080;

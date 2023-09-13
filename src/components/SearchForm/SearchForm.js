@@ -3,7 +3,6 @@ import './SearchForm.css';
 import searchFormIcon from '../../images/searchFormIcon.svg';
 import searchFormToggle from '../../images/searchFormToggle.svg';
 import searchFormToggleOff from '../../images/searchFormToggleOff.svg';
-import useForm from "../../hooks/useForm";
 import { useLocation } from "react-router-dom";
 
 export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setSearchTerm, filterSavedMovies }) {
@@ -16,34 +15,28 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
         }
     }, [])
 
-    const stateSchema = {
-        query: { value: '', error: ''},
-    };
-
-    const validationStateSchema = {
-        query: {
-          validator: {
-            regEx: /^[a-zA-Zа-яА-я- ]{2,30}$/,
-            error: 'Нужно ввести ключевое слово.',
-          },
-        },
-      };
-
-      const { state, handleOnChange, handleOnSubmit, disable } = useForm(
-        stateSchema,
-        validationStateSchema,
-        handleSubmit
-      );
+    const [searchInput, setSearchInput] = React.useState('');
+    const [errorText, setErrorText] = React.useState('');
     
     const handleOnChangeWithSearchTerm = (e) => {
         setSearchTerm(e.target.value);
     }
 
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault();
+        setErrorText('');
         if(location.pathname === '/movies') {
+            if (searchTerm.trim() === '') {
+                setErrorText('Нужно ввести ключевое слово.');
+                return;
+                };
             findMovies(searchTerm);
         } else if(location.pathname === '/saved-movies') {
-            filterSavedMovies(state.query.value)
+            if (searchInput.trim() === '') {
+                setErrorText('Нужно ввести ключевое слово.');
+                return;
+              };
+            filterSavedMovies(searchInput);
         }
     }
 
@@ -88,7 +81,6 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
                         placeholder="Фильм"
                         required 
                         onChange={(e) => {
-                            handleOnChange(e);
                             handleOnChangeWithSearchTerm(e);
                         }}
                         value = { searchTerm }
@@ -101,16 +93,15 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
                         id="query" 
                         placeholder="Фильм"
                         required 
-                        onChange = { handleOnChange }
-                        value = { state.query.value }
+                        onChange = {(e) => setSearchInput(e.target.value)}
+                        value = { searchInput }
                         />
                     )}
                     <input 
                     className="searchForm__button" 
                     type="submit" 
                     value="Найти"
-                    disabled = { disable } 
-                    onClick = { handleOnSubmit }
+                    onClick = { handleSubmit }
                     />
                 </fieldset>
                 {location.pathname === '/movies' ? (
@@ -126,7 +117,7 @@ export default function SearchForm({ findMovies, setIsShortOff, searchTerm, setS
                     <h2 className="searchForm__toggle-name">Короткометражки</h2>
                 </div>
                 )}
-                
+                <h2 className="searchForm__error">{ errorText }</h2>
             </form>
         </section>
     )
