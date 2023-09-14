@@ -121,7 +121,7 @@ function App() {
 
     React.useEffect(() => {
       fetchSavedMovies();
-    }, []);
+    }, [currentUser._id]);
 
   // прелоадер
   const [isLoading, setIsLoading] = React.useState(false);
