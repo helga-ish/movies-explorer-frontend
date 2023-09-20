@@ -4,10 +4,9 @@ import React from 'react';
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 
-function Header() {
+function Header({ loggedIn }) {
 
     const location = useLocation();
-
 
     const headerClass = `header ${location.pathname === '/' ? 'header_pink' : ''} ${location.pathname === '/signin' || location.pathname === '/signup' || location.pathname === '/404' ? 'header_disabled' : ''}`
     
@@ -16,7 +15,7 @@ function Header() {
                 <Link to='/'>
                     <img className="header__logo" src={logo} alt="логотип главной страницы" />
                 </Link>
-                <Navigation />
+                <Navigation isLoggedIn = { loggedIn } />
             </header>
         )
     }

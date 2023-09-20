@@ -77,8 +77,13 @@
 }
 
 .form__field_type_error {
+    outline-color: #FF4062;
     color: #FF4062;
 }
+
+.form__field_type_error:focus {
+    outline-color: #FF4062;
+} 
 
 .form__field::placeholder {
     visibility: hidden;
@@ -133,8 +138,20 @@
     opacity: .8;
 }
 
-.button-login {
-    margin-top: 88px;
+.form-button:disabled {
+    background-color: #A0A0A0;
+    transition: none;
+    cursor: default;
+}
+
+.form-button:disabled:hover {
+    opacity: 1;
+}
+
+.button-login-error {
+    margin-top: 137px;
+    margin-bottom: 8px;
+    text-align: center;
 }
 
 .form__transfer {
@@ -165,8 +182,10 @@
     opacity: .8;
 }
 
-.password-input-error {
-    margin-bottom: 69px;
+.button-error {
+    text-align: center;
+    margin-top: 49px;
+    margin-bottom: 8px;
 }
 
 
@@ -194,12 +213,11 @@
         margin-top: 56px;
     }
 
-    .password-input-error {
-        margin-bottom: 157px;
+    .button-login-error {
+        margin-top: 225px;
     }
-
-    .button-login {
-        margin-top: 87px;
+    .button-error {
+        margin-top: 137px;
     }
 
     .form__transfer {

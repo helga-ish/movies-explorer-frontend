@@ -53,6 +53,15 @@
     border-width: 0 0 1px;
 }
 
+.searchForm__error {
+    color:red;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+
 .searchForm__field:focus {
     border-bottom: 1px solid #2BE080;
 }
@@ -76,6 +85,11 @@
 
 .searchForm__button:hover {
     opacity: .7;
+}
+
+.searchForm__button:disabled {
+    background-color: #A0A0A0;
+    cursor: default;
 }
 
 .searchForm__filter {
@@ -103,7 +117,7 @@
     margin-right: 30px;
 }
 
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1000px) {
     .search {
         height: 261px;
         margin-left: 30px;

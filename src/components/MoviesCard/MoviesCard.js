@@ -1,23 +1,97 @@
 import React from "react";
 import './MoviesCard.css';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function MoviesCard() {  
+import { useLocation } from 'react-router-dom';
+
+export default function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
+
+    const location = useLocation();
+    const currentUser = React.useContext(CurrentUserContext);
+    const isOwn = movie.owner === currentUser._id;
+
+    // нажатие на кнопку "сохранить", сохранение фильма в нашу БД, затем удаление из нее:
+
+    function handleSaving() {
+        handleSaveMovie(movie);
+    }
+
+    function handleRemoving() {
+       handleRemoveMovie(movie);
+    }
+
+    // появление кнопки "сохранить" при наведении на картинку:
+    const [showSaveButton, setShowSaveButton] = React.useState(false);
+    const handleShowButton = (e) => {
+        setShowSaveButton(true);
+    };
+
+    const handleHideButton = (e) => {
+        setShowSaveButton(false);
+    };
+
+    // переход на трейлер по клику на картинку:
+    const handleRedirectionClick = () => {
+        window.open(movie.trailerLink, '_blank');
+    };
+
+    // смена формата длины фильма:
+    function toHoursAndMinutes(totalMinutes) {
+        if (totalMinutes < 60) {
+            return `${totalMinutes}м`;
+        } else {
+            const hours = Math.floor(totalMinutes / 60);
+            const minutes = totalMinutes % 60;
+            return `${hours}ч ${minutes}м`;
+        }
+      }
+
+      const cardSaveButtonClassName = ( 
+        `moviesCard__button ${movie.isSaved ? 'moviesCard__button_type_saved' : 'moviesCard__button_type_notsaved'}` 
+      );
+
     return(
-        <li className="moviesCard">
-            <img
-            className="moviesCard__image"
-            src='https://plus.unsplash.com/premium_photo-1673285286254-d0d0e465e0fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80'
-            alt='обложка фильма "Токийские ночи"'
-            // далее функции для появления кнопки "сохранить" или крестика удаления карточки по ховеру:
-            // onMouseOver={}
-            // onMouseOut={}
-            />
-            <button className="moviesCard__button moviesCard__button_type_notsaved" type="button">Сохранить</button>
-            {/* <button className="moviesCard__button moviesCard__button_type_saved" type="button"/> <-- галочка сохраненного фильма, завязывается на стейт карточки */}
-            {/* <button className="moviesCard__button moviesCard__button_type_remove" type="button"/> <-- крестик для удаления сохраненного фильма, завязывается на стейт карточки */}
+        <li className="moviesCard"
+        >
+            <div
+            className="moviesCard__block"
+            onMouseEnter = { handleShowButton }
+            onMouseLeave = { handleHideButton } 
+            >
+                <img
+                className="moviesCard__image"
+                src={ `https://api.nomoreparties.co/${movie.image.url}`}
+                alt={ `обложка фильма ${ movie.nameRU }` }
+                onClick = { handleRedirectionClick }
+                />
+                {movie.isSaved ? (
+                    <button className={ cardSaveButtonClassName }
+                    type="button"
+                    onClick = { handleRemoving }
+                    />
+                ) : (
+                    location.pathname === '/saved-movies' && isOwn ? (
+                        <button
+                        className="moviesCard__button moviesCard__button_type_remove"
+                        type="button"
+                        onClick = { handleRemoving }
+                        />
+                    ) : (
+                        showSaveButton && 
+                        <button
+                        className ={ cardSaveButtonClassName }
+                        type = "button"
+                        onClick = { handleSaving }
+                        >
+                        Сохранить
+                        </button>
+                    )
+                )}
+            </div>
+            
             <div className="moviesCard__container">
-                <h2 className="moviesCard__name">Токийские ночи</h2>
-                <p className="moviesCard__length">1ч 17м</p>
+                <h2 className="moviesCard__name">{ movie.nameRU }</h2>
+                <p className="moviesCard__length">{ toHoursAndMinutes(movie.duration) }</p>
             </div>
         </li>
     )

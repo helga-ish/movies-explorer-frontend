@@ -4,18 +4,16 @@ import { Link, useLocation } from 'react-router-dom';
 import './Navigation.css';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 
-export default function Navigation() {
+export default function Navigation({ isLoggedIn }) {
 
     const location = useLocation();
 
     const headerMoviesLinkClassName = `navigation__link ${location.pathname === '/movies' ? 'navigation__link_active' : ''}`;
     const headerSavedMoviesLinkClassName = `navigation__link ${location.pathname === '/saved-movies' ? 'navigation__link_active' : ''}`;
 
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
     return(
             <nav className='navigation'>
-                {isLoggedIn ? (
+                {!isLoggedIn ? (
                     <ul className="navigation__main">
                         <li><Link className='navigation__link navigation__link_type_signup' to="/signup">Регистрация</Link></li>
                         <li>
